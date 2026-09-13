@@ -9,11 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
     
     <style>
-        /* ========================================================
-           DESIGN TOKEN ARCHITECTURE (4 THEMES)
-           ======================================================== */
-        
-        /* 1. MORNING (Warm editorial + 3D bevel) */
+        /* DESIGN TOKEN ARCHITECTURE */
         :root[data-theme="morning"] {
             --bg-canvas: #FBF8F3;
             --bg-radial: radial-gradient(circle at 50% 15%, #F4ECE1 0%, #FBF8F3 65%);
@@ -23,16 +19,13 @@
             --card-radius: 20px;
             --font-display: 'Playfair Display', Georgia, serif;
             --font-body: 'Inter', sans-serif;
-            
             --text-main: #3E3832;
             --text-sub: #756D64;
             --text-muted: #9E968D;
             --border-line: #E8E2D8;
-            
             --pill-bg: #FFFFFF;
             --pill-border: 2px solid #E4DDD2;
             --pill-shadow: 0 12px 28px -8px rgba(90, 75, 60, 0.12);
-            
             --badge-auth-bg: #EEF4F0; --badge-auth-txt: #24543B; --badge-auth-border: #A3C5B1;
             --badge-incon-bg: #FBF4E8; --badge-incon-txt: #7A571E; --badge-incon-border: #DEC393;
             --badge-synth-bg: #FAECEC; --badge-synth-txt: #8E3636; --badge-synth-border: #E4ABAB;
@@ -40,7 +33,6 @@
             --grid-opacity: 0.05;
         }
 
-        /* 2. LINEAR DARK GLASS */
         :root[data-theme="linear"] {
             --bg-canvas: #090D16;
             --bg-radial: radial-gradient(circle at 50% 20%, #151E33 0%, #090D16 75%);
@@ -50,16 +42,13 @@
             --card-radius: 18px;
             --font-display: 'Plus Jakarta Sans', sans-serif;
             --font-body: 'Inter', sans-serif;
-            
             --text-main: #F1F5F9;
             --text-sub: #94A3B8;
             --text-muted: #64748B;
             --border-line: rgba(255, 255, 255, 0.08);
-            
             --pill-bg: rgba(24, 34, 56, 0.85);
             --pill-border: 1px solid rgba(255, 255, 255, 0.14);
             --pill-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.15);
-            
             --badge-auth-bg: rgba(16, 185, 129, 0.12); --badge-auth-txt: #34D399; --badge-auth-border: rgba(52, 211, 153, 0.3);
             --badge-incon-bg: rgba(245, 158, 11, 0.12); --badge-incon-txt: #FBBF24; --badge-incon-border: rgba(251, 191, 36, 0.3);
             --badge-synth-bg: rgba(239, 68, 68, 0.12); --badge-synth-txt: #F87171; --badge-synth-border: rgba(248, 113, 113, 0.3);
@@ -67,7 +56,6 @@
             --grid-opacity: 0.04;
         }
 
-        /* 3. EDITORIAL PAPER */
         :root[data-theme="editorial"] {
             --bg-canvas: #FAF9F6;
             --bg-radial: none;
@@ -77,16 +65,13 @@
             --card-radius: 12px;
             --font-display: 'Newsreader', serif;
             --font-body: 'Inter', sans-serif;
-            
             --text-main: #1C1917;
             --text-sub: #57534E;
             --text-muted: #8F8881;
             --border-line: #EAE6DF;
-            
             --pill-bg: #FFFFFF;
             --pill-border: 1px solid #D6D0C5;
             --pill-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-            
             --badge-auth-bg: #F0FDF4; --badge-auth-txt: #166534; --badge-auth-border: #BBF7D0;
             --badge-incon-bg: #FFFBEB; --badge-incon-txt: #92400E; --badge-incon-border: #FDE68A;
             --badge-synth-bg: #FEF2F2; --badge-synth-txt: #991B1B; --badge-synth-border: #FECACA;
@@ -94,7 +79,6 @@
             --grid-opacity: 0.03;
         }
 
-        /* 4. PURE GEMINI */
         :root[data-theme="gemini"] {
             --bg-canvas: #F8FAFD;
             --bg-radial: radial-gradient(circle at 50% 20%, rgba(220, 235, 255, 0.6) 0%, rgba(248, 250, 253, 1) 70%);
@@ -104,16 +88,13 @@
             --card-radius: 24px;
             --font-display: 'Plus Jakarta Sans', sans-serif;
             --font-body: 'Inter', sans-serif;
-            
             --text-main: #1E293B;
             --text-sub: #64748B;
             --text-muted: #94A3B8;
             --border-line: #E2E8F0;
-            
             --pill-bg: #FFFFFF;
             --pill-border: 1.5px solid #DCE5F1;
             --pill-shadow: 0 16px 36px -10px rgba(59, 130, 246, 0.1);
-            
             --badge-auth-bg: #ECFDF5; --badge-auth-txt: #059669; --badge-auth-border: #A7F3D0;
             --badge-incon-bg: #FFFBEB; --badge-incon-txt: #D97706; --badge-incon-border: #FDE68A;
             --badge-synth-bg: #FEF2F2; --badge-synth-txt: #DC2626; --badge-synth-border: #FECACA;
@@ -121,12 +102,7 @@
             --grid-opacity: 0.05;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
 
         body {
             min-height: 100vh;
@@ -141,14 +117,11 @@
             position: relative;
         }
 
-        /* Subtle Background Grid */
         .bg-grid {
             position: fixed;
             top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background-image: 
-                linear-gradient(to right, currentColor 1px, transparent 1px),
-                linear-gradient(to bottom, currentColor 1px, transparent 1px);
+            background-image: linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px);
             background-size: 40px 40px;
             opacity: var(--grid-opacity);
             transform: rotate(-6deg);
@@ -156,28 +129,23 @@
             pointer-events: none;
         }
 
-        /* Top Theme Switcher Bar */
         .theme-switcher-bar {
             position: fixed;
-            top: 12px;
-            right: 20px;
+            top: 12px; right: 20px;
             background: var(--card-surface);
             border: 1px solid var(--border-line);
             border-radius: 99px;
             padding: 3px;
-            display: flex;
-            gap: 3px;
+            display: flex; gap: 3px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
             z-index: 100;
             backdrop-filter: blur(8px);
         }
 
         .theme-btn {
-            background: none;
-            border: none;
+            background: none; border: none;
             font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 11px; font-weight: 600;
             color: var(--text-sub);
             padding: 5px 11px;
             border-radius: 99px;
@@ -185,193 +153,105 @@
             transition: all 0.2s ease;
             white-space: nowrap;
         }
-
         .theme-btn.active {
             background: var(--brand-sparkle);
             color: #FFFFFF;
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
-        /* Top Nav */
         .top-nav {
-            width: 100%;
-            max-width: 1540px;
+            width: 100%; max-width: 1540px;
             padding: 16px 32px 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
+        .brand-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .sparkle-icon {
-            width: 26px;
-            height: 26px;
+            width: 26px; height: 26px;
             background: var(--brand-sparkle);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 3px 8px rgba(0,0,0,0.12);
         }
-
         .sparkle-icon svg { width: 14px; height: 14px; fill: #FFFFFF; }
-
-        .brand-name {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-
+        .brand-name { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
         .lab-badge {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-sub);
+            font-size: 11px; font-weight: 600; color: var(--text-sub);
             background: var(--card-surface);
             border: 1px solid var(--border-line);
-            padding: 5px 12px;
-            border-radius: 99px;
+            padding: 5px 12px; border-radius: 99px;
         }
 
-        /* Main Workspace Container */
         .main-stage {
-            width: 100%;
-            max-width: 1540px;
+            width: 100%; max-width: 1540px;
             padding: 12px 24px 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            justify-content: center;
+            display: flex; flex-direction: column; align-items: center;
+            flex: 1; justify-content: center;
         }
 
-        /* ==============================
-           1. LANDING SCREEN (GEMINI CENTRIC)
-           ============================== */
+        /* LANDING VIEW */
         #landingView {
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
             animation: fadeIn 0.4s ease;
             margin-top: 40px;
         }
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: 46px;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-            line-height: 1.15;
+            font-size: 46px; font-weight: 700;
+            letter-spacing: -1px; margin-bottom: 12px; line-height: 1.15;
         }
-
         .hero-title span {
             background: var(--brand-sparkle);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .hero-subtitle {
-            font-size: 15px;
-            color: var(--text-sub);
-            margin-bottom: 34px;
-            max-width: 520px;
-            line-height: 1.5;
+            font-size: 15px; color: var(--text-sub);
+            margin-bottom: 34px; max-width: 520px; line-height: 1.5;
         }
 
         .gemini-pill {
-            width: 100%;
-            max-width: 680px;
+            width: 100%; max-width: 680px;
             background: var(--pill-bg);
             border: var(--pill-border);
             border-radius: 36px;
             padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            display: flex; align-items: center; gap: 16px;
             box-shadow: var(--pill-shadow);
             cursor: pointer;
             transition: all 0.25s ease;
             backdrop-filter: blur(10px);
         }
-
-        .gemini-pill:hover {
-            transform: translateY(-2px);
-        }
+        .gemini-pill:hover { transform: translateY(-2px); }
 
         .upload-plus-btn {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             background: var(--border-line);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); flex-shrink: 0;
         }
-
-        .pill-placeholder {
-            flex: 1;
-            text-align: left;
-            font-size: 15px;
-            color: var(--text-sub);
-            font-weight: 500;
-        }
-
+        .pill-placeholder { flex: 1; text-align: left; font-size: 15px; color: var(--text-sub); font-weight: 500; }
         .pill-action-badge {
             background: var(--border-line);
             color: var(--text-main);
-            font-size: 12px;
+            font-size: 12px; font-weight: 600;
+            padding: 6px 14px; border-radius: 20px;
+        }
+
+        /* LOADING OVERLAY */
+        #loadingSpinner {
+            display: none;
+            margin-top: 24px;
+            font-size: 14px;
             font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 20px;
-        }
-
-        .preset-container {
-            margin-top: 22px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .preset-hint {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .preset-chip {
-            background: var(--card-surface);
-            border: 1px solid var(--border-line);
-            padding: 8px 16px;
-            border-radius: 24px;
-            font-size: 13px;
-            font-weight: 500;
             color: var(--text-sub);
-            cursor: pointer;
-            transition: all 0.2s ease;
+            animation: pulse 1.2s infinite ease-in-out;
         }
 
-        .preset-chip:hover {
-            border-color: var(--text-main);
-            color: var(--text-main);
-            transform: translateY(-1px);
-        }
-
-        /* ==============================
-           2. NO-SCROLL PANORAMIC RESULTS VIEW (3 COLUMNS)
-           ============================== */
+        /* PANORAMIC RESULTS VIEW */
         #resultsView {
             display: none;
             width: 100%;
@@ -386,324 +266,174 @@
             width: 100%;
         }
 
-        /* Card Container in Studio */
         .studio-card {
             background: var(--card-surface);
             border-radius: var(--card-radius);
             border: 1px solid var(--card-border);
             box-shadow: var(--card-bevel);
             padding: 20px;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             backdrop-filter: blur(12px);
             position: relative;
         }
 
         .card-header-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            padding-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 14px; padding-bottom: 10px;
             border-bottom: 1px solid var(--border-line);
         }
-
         .card-title-text {
             font-family: var(--font-display);
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.2px;
+            font-size: 15px; font-weight: 700;
+            color: var(--text-main); letter-spacing: -0.2px;
         }
-
         .tag-pill {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: var(--border-line);
-            color: var(--text-main);
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            padding: 3px 8px; border-radius: 6px;
+            background: var(--border-line); color: var(--text-main);
         }
 
-        /* ==============================
-           LEFT COLUMN: PROVENANCE & STRESS
-           ============================== */
-        .info-group {
-            margin-bottom: 16px;
-        }
-
+        /* Left Column */
+        .info-group { margin-bottom: 16px; }
         .group-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px;
         }
-
         .exif-list {
             background: rgba(0,0,0,0.02);
-            border-radius: 12px;
-            padding: 10px 14px;
+            border-radius: 12px; padding: 10px 14px;
             border: 1px solid var(--border-line);
         }
-
         .exif-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11.5px;
-            padding: 5px 0;
+            display: flex; justify-content: space-between;
+            font-size: 11.5px; padding: 5px 0;
             border-bottom: 1px dashed var(--border-line);
         }
-
         .exif-row:last-child { border-bottom: none; }
         .exif-k { color: var(--text-sub); }
         .exif-v { font-weight: 600; color: var(--text-main); }
 
-        /* Stress Toggle Rows */
         .stress-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 7px 0;
-            font-size: 11.5px;
-            color: var(--text-sub);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 7px 0; font-size: 11.5px; color: var(--text-sub);
             border-bottom: 1px dashed var(--border-line);
         }
         .stress-row:last-child { border-bottom: none; }
 
-        .toggle-switch {
-            position: relative;
-            width: 32px;
-            height: 18px;
-        }
+        .toggle-switch { position: relative; width: 32px; height: 18px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
-
         .slider-round {
             position: absolute; cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
             background-color: var(--border-line);
-            transition: .25s;
-            border-radius: 18px;
+            transition: .25s; border-radius: 18px;
         }
         .slider-round:before {
             position: absolute; content: "";
             height: 12px; width: 12px;
             left: 3px; bottom: 3px;
             background-color: white;
-            transition: .25s;
-            border-radius: 50%;
+            transition: .25s; border-radius: 50%;
         }
         input:checked + .slider-round { background-color: #8C6D34; }
         input:checked + .slider-round:before { transform: translateX(14px); }
 
-        /* ==============================
-           CENTER COLUMN: VISUAL HEATMAP HERO
-           ============================== */
-        .center-stage-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
+        /* Center Column */
+        .center-stage-container { display: flex; flex-direction: column; justify-content: space-between; }
         .heatmap-display-frame {
             position: relative;
-            width: 100%;
-            height: 390px;
-            border-radius: 14px;
-            overflow: hidden;
+            width: 100%; height: 390px;
+            border-radius: 14px; overflow: hidden;
             background: #000000;
             box-shadow: 0 4px 14px rgba(0,0,0,0.1);
         }
-
         .heatmap-display-frame img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover;
         }
-
-        .heatmap-display-frame canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            mix-blend-mode: color-dodge;
-            opacity: 0.65;
-            pointer-events: none;
+        .heatmap-overlay-img {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.65; pointer-events: none;
             transition: opacity 0.1s ease;
         }
-
         .file-watermark {
-            position: absolute;
-            top: 10px; left: 10px;
+            position: absolute; top: 10px; left: 10px;
             background: rgba(0, 0, 0, 0.65);
-            color: #FFFFFF;
-            font-size: 11px;
-            font-weight: 500;
-            padding: 3px 9px;
-            border-radius: 6px;
+            color: #FFFFFF; font-size: 11px; font-weight: 500;
+            padding: 3px 9px; border-radius: 6px;
             backdrop-filter: blur(4px);
         }
-
         .slider-control-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            display: flex; align-items: center; gap: 12px;
             background: rgba(0,0,0,0.02);
-            border-radius: 12px;
-            padding: 9px 16px;
+            border-radius: 12px; padding: 9px 16px;
             border: 1px solid var(--border-line);
             margin-top: 14px;
         }
-
-        .slider-control-bar label {
-            font-size: 11.5px;
-            font-weight: 600;
-            color: var(--text-sub);
-            white-space: nowrap;
-        }
-
+        .slider-control-bar label { font-size: 11.5px; font-weight: 600; color: var(--text-sub); white-space: nowrap; }
         .opacity-slider { flex: 1; cursor: pointer; accent-color: #8C6D34; }
         .opacity-val { font-size: 11.5px; font-weight: 700; width: 36px; text-align: right; }
 
-        .cues-strip {
-            margin-top: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .cues-strip { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+        .cue-item { font-size: 11px; color: var(--text-sub); display: flex; align-items: center; gap: 8px; }
+        .cue-dot { width: 5px; height: 5px; border-radius: 50%; background: #8C6D34; flex-shrink: 0; }
 
-        .cue-item {
-            font-size: 11px;
-            color: var(--text-sub);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .cue-dot {
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            background: #8C6D34;
-            flex-shrink: 0;
-        }
-
-        /* ==============================
-           RIGHT COLUMN: CALIBRATED VERDICT
-           ============================== */
+        /* Right Column */
         .verdict-box {
             background: rgba(0,0,0,0.02);
-            border-radius: 14px;
-            padding: 16px;
+            border-radius: 14px; padding: 16px;
             border: 1px solid var(--border-line);
             margin-bottom: 14px;
         }
-
         .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 99px;
-            font-size: 11.5px;
-            font-weight: 700;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 12px; border-radius: 99px;
+            font-size: 11.5px; font-weight: 700;
             margin-bottom: 10px;
         }
-
         .status-pill.authentic { background: var(--badge-auth-bg); color: var(--badge-auth-txt); border: 1px solid var(--badge-auth-border); }
         .status-pill.inconclusive { background: var(--badge-incon-bg); color: var(--badge-incon-txt); border: 1px solid var(--badge-incon-border); }
         .status-pill.synthetic { background: var(--badge-synth-bg); color: var(--badge-synth-txt); border: 1px solid var(--badge-synth-border); }
         .status-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background-color: currentColor; }
 
-        .verdict-headline {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1.25;
-            margin-bottom: 12px;
-        }
-
-        .score-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 8px;
-        }
-
+        .verdict-headline { font-family: var(--font-display); font-size: 20px; font-weight: 700; line-height: 1.25; margin-bottom: 12px; }
+        .score-flex { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
         .score-big { font-size: 34px; font-weight: 800; line-height: 1; }
         .score-sublabel { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
 
-        .meter-bar {
-            height: 8px;
-            background: var(--border-line);
-            border-radius: 99px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-
-        .meter-fill {
-            height: 100%;
-            width: 52%;
-            background: #D97706;
-            border-radius: 99px;
-            transition: width 0.6s ease;
-        }
-
-        .meter-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 9.5px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        .meter-bar { height: 8px; background: var(--border-line); border-radius: 99px; position: relative; overflow: hidden; margin-bottom: 5px; }
+        .meter-fill { height: 100%; width: 52%; background: #D97706; border-radius: 99px; transition: width 0.6s ease; }
+        .meter-labels { display: flex; justify-content: space-between; font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
 
         .verdict-note-box {
-            font-size: 11.5px;
-            line-height: 1.5;
-            color: var(--text-sub);
-            padding: 12px;
-            border-radius: 10px;
+            font-size: 11.5px; line-height: 1.5; color: var(--text-sub);
+            padding: 12px; border-radius: 10px;
             background: var(--card-surface);
             border: 1px solid var(--border-line);
             margin-bottom: 14px;
         }
 
-        /* Benchmark Badge */
         .benchmark-badge {
             background: rgba(0,0,0,0.02);
             border: 1px solid var(--border-line);
-            border-radius: 10px;
-            padding: 10px 12px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-sub);
-            margin-bottom: 16px;
+            border-radius: 10px; padding: 10px 12px;
+            display: flex; justify-content: space-between;
+            font-size: 11px; color: var(--text-sub); margin-bottom: 16px;
         }
 
         .reset-btn {
-            width: 100%;
-            background: var(--text-main);
-            color: var(--bg-canvas);
-            border: none;
-            border-radius: 10px;
-            padding: 11px 16px;
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            width: 100%; background: var(--text-main); color: var(--bg-canvas);
+            border: none; border-radius: 10px;
+            padding: 11px 16px; font-size: 12.5px; font-weight: 600;
+            cursor: pointer; transition: opacity 0.2s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
         .reset-btn:hover { opacity: 0.9; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         #fileInput { display: none; }
     </style>
 </head>
@@ -711,7 +441,7 @@
 
     <div class="bg-grid"></div>
 
-    <!-- Live Theme Switcher Floating Bar -->
+    <!-- Theme Switcher -->
     <div class="theme-switcher-bar">
         <button class="theme-btn active" onclick="setTheme('morning')">☀️ Morning</button>
         <button class="theme-btn" onclick="setTheme('linear')">🌌 Linear Dark</button>
@@ -732,52 +462,57 @@
 
     <main class="main-stage">
 
-        <!-- ==============================================
-             SCREEN 1: CLEAN GEMINI LANDING
-             ============================================== -->
+        <!-- SCREEN 1: LANDING -->
         <section id="landingView">
             <h1 class="hero-title">Verify Any Image with <span>SignalScope</span></h1>
             <p class="hero-subtitle">Detect AI-generated media, inspect camera provenance, and interpret model decisions with visual heatmaps.</p>
 
-            <div class="gemini-pill" onclick="document.getElementById('fileInput').click()">
+            <div class="gemini-pill" id="geminiDropPill" onclick="document.getElementById('fileInput').click()">
                 <div class="upload-plus-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </div>
-                <div class="pill-placeholder">Drop an image here, or click to browse</div>
+                <div class="pill-placeholder">Drop an image here, paste (Ctrl+V), or click to browse</div>
                 <div class="pill-action-badge">Analyze Media</div>
-                <input type="file" id="fileInput" accept="image/*">
+                <input type="file" id="fileInput" accept="image/*" onclick="event.stopPropagation()">
             </div>
 
+            <div id="loadingSpinner">⏳ Running ViT-B/16 Self-Attention & EXIF Forensics...</div>
         </section>
 
 
-        <!-- ==============================================
-             SCREEN 2: NO-SCROLL PANORAMIC RESULTS (3 COLUMNS)
-             ============================================== -->
+        <!-- SCREEN 2: PANORAMIC RESULTS (NO SCROLL) -->
         <section id="resultsView">
             <div class="panoramic-grid">
 
-                <!-- ==============================
-                     LEFT COLUMN: PROVENANCE & STRESS
-                     ============================== -->
+                <!-- LEFT COLUMN: PROVENANCE -->
                 <aside class="studio-card">
                     <div class="card-header-line">
                         <span class="card-title-text">Source & Provenance</span>
                         <span class="tag-pill">Bonus D</span>
                     </div>
 
-                    <!-- EXIF Data -->
                     <div class="info-group">
                         <div class="group-label">Camera Sensor Profile</div>
                         <div class="exif-list">
                             <div class="exif-row"><span class="exif-k">Device</span><span class="exif-v" id="exifDevice">Smartphone Camera</span></div>
-                            <div class="exif-row"><span class="exif-k">Sensor</span><span class="exif-v" id="exifSensor">CMOS / Physical Optics</span></div>
+                            <div class="exif-row"><span class="exif-k">Sensor</span><span class="exif-v" id="exifSensor">CMOS Sensor</span></div>
                             <div class="exif-row"><span class="exif-k">Exposure</span><span class="exif-v" id="exifExposure">f/1.8 • 1/120s • ISO 125</span></div>
                             <div class="exif-row"><span class="exif-k">Signature</span><span class="exif-v" id="exifSignature">Hardware ISP Verified</span></div>
                         </div>
                     </div>
 
-                    <!-- Robustness Stress Test Toggles (Bonus C) -->
+                    <div class="info-group">
+                        <div class="group-label" style="display: flex; justify-content: space-between;">
+                            <span>Fourier Optical Spectrum</span>
+                            <span style="color: #24543B; font-weight: 700;">Section 11</span>
+                        </div>
+                        <div class="exif-list">
+                            <div class="exif-row"><span class="exif-k">Lens Decay (1/f)</span><span class="exif-v" id="fftDecay">--</span></div>
+                            <div class="exif-row"><span class="exif-k">Optics Physics</span><span class="exif-v" id="fftOptics">--</span></div>
+                            <div class="exif-row"><span class="exif-k">Latent Grid</span><span class="exif-v" id="fftGrid">--</span></div>
+                        </div>
+                    </div>
+
                     <div class="info-group">
                         <div class="group-label" style="display: flex; justify-content: space-between;">
                             <span>Robustness Defense</span>
@@ -787,7 +522,7 @@
                             <div class="stress-row">
                                 <span>JPEG Compression (q=50)</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" id="toggleJpeg" checked>
+                                    <input type="checkbox" id="toggleJpeg" onchange="reanalyzeWithStress()">
                                     <span class="slider-round"></span>
                                 </label>
                             </div>
@@ -801,27 +536,24 @@
                             <div class="stress-row">
                                 <span>Screenshot Resampling</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" id="toggleScreenshot">
+                                    <input type="checkbox" id="toggleScreenshot" checked>
                                     <span class="slider-round"></span>
                                 </label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Image Specs -->
                     <div class="info-group" style="margin-bottom: 0;">
                         <div class="group-label">Inspection Target</div>
                         <div class="exif-list">
-                            <div class="exif-row"><span class="exif-k">File</span><span class="exif-v" id="targetFileName">real_object.jpeg</span></div>
-                            <div class="exif-row"><span class="exif-k">Resolution</span><span class="exif-v">4000 × 3000 (12MP)</span></div>
+                            <div class="exif-row"><span class="exif-k">File</span><span class="exif-v" id="targetFileName">source.jpg</span></div>
+                            <div class="exif-row"><span class="exif-k">Architecture</span><span class="exif-v">ViT-B/16 (224px)</span></div>
                         </div>
                     </div>
                 </aside>
 
 
-                <!-- ==============================
-                     CENTER COLUMN: GRAD-CAM VISUAL HERO
-                     ============================== -->
+                <!-- CENTER COLUMN: VISUAL HEATMAP HERO -->
                 <section class="studio-card center-stage-container">
                     <div>
                         <div class="card-header-line">
@@ -829,14 +561,12 @@
                             <span class="tag-pill" style="background: rgba(140, 109, 52, 0.15); color: #8C6D34;">Headline Bonus A</span>
                         </div>
 
-                        <!-- Image + Heatmap Canvas Display -->
                         <div class="heatmap-display-frame">
-                            <img id="resultImage" src="real_object_image.jpeg" alt="Inspected Target">
-                            <canvas id="heatmapCanvas" width="900" height="500"></canvas>
-                            <span class="file-watermark" id="stageWatermark">real_object_image.jpeg</span>
+                            <img id="resultImage" src="" alt="Inspected Target">
+                            <img id="resultHeatmap" class="heatmap-overlay-img" src="" alt="Heatmap Overlay">
+                            <span class="file-watermark" id="stageWatermark">target.jpg</span>
                         </div>
 
-                        <!-- Opacity Slider -->
                         <div class="slider-control-bar">
                             <label for="opacitySlider">Heatmap Opacity:</label>
                             <input type="range" class="opacity-slider" id="opacitySlider" min="0" max="100" value="65" oninput="setOpacity(this.value)">
@@ -844,45 +574,33 @@
                         </div>
                     </div>
 
-                    <!-- Grounded Cues -->
-                    <div class="cues-strip">
-                        <div class="cue-item">
-                            <span class="cue-dot"></span>
-                            <span id="cue1">Attention localized on high-contrast fabric boundaries and zipper hardware.</span>
-                        </div>
-                        <div class="cue-item">
-                            <span class="cue-dot"></span>
-                            <span id="cue2">Global illumination angle and ambient shadows match physical scene geometry.</span>
-                        </div>
+                    <div class="cues-strip" id="cuesStrip">
+                        <!-- Dynamic cues populated here -->
                     </div>
                 </section>
 
 
-                <!-- ==============================
-                     RIGHT COLUMN: CALIBRATED VERDICT
-                     ============================== -->
+                <!-- RIGHT COLUMN: CALIBRATED VERDICT -->
                 <aside class="studio-card">
                     <div class="card-header-line">
                         <span class="card-title-text">Calibrated Verdict</span>
                         <span class="tag-pill">Vision Transformer</span>
                     </div>
 
-                    <!-- Verdict Box -->
                     <div class="verdict-box">
-                        <div class="status-pill inconclusive" id="statusPill">Inconclusive / Mixed Signals</div>
-                        <div class="verdict-headline" id="verdictMainText">Smartphone HDR Processing Detected</div>
+                        <div class="status-pill inconclusive" id="statusPill">Inconclusive</div>
+                        <div class="verdict-headline" id="verdictMainText">Processing...</div>
                         
                         <div class="score-flex">
                             <div>
-                                <span class="score-sublabel">Model Probability</span>
-                                <div class="score-big" id="verdictScore">52%</div>
+                                <span class="score-sublabel">AI Probability</span>
+                                <div class="score-big" id="verdictScore">0%</div>
                             </div>
                             <span style="font-size: 11px; font-weight: 600; color: var(--text-sub);">Threshold: 75%</span>
                         </div>
 
-                        <!-- Meter -->
                         <div class="meter-bar">
-                            <div class="meter-fill" id="calibratedFill" style="width: 52%;"></div>
+                            <div class="meter-fill" id="calibratedFill" style="width: 50%;"></div>
                         </div>
                         <div class="meter-labels">
                             <span>Authentic (&lt;35%)</span>
@@ -891,18 +609,15 @@
                         </div>
                     </div>
 
-                    <!-- Forensic Explanation Callout -->
                     <div class="verdict-note-box" id="verdictSummary">
-                        <strong>Calibration Note:</strong> Score elevated by computational phone camera edge-sharpening (HDR). Physical camera hardware metadata confirms authentic optical capture.
+                        <!-- Dynamic summary note populated here -->
                     </div>
 
-                    <!-- ViT Benchmark Badge -->
                     <div class="benchmark-badge">
                         <span>ViT-B/16 Test Benchmark:</span>
                         <strong style="color: #24543B;">0.9937 AUC</strong>
                     </div>
 
-                    <!-- Reset / New Analysis Button -->
                     <button class="reset-btn" onclick="resetToLanding()">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         Analyze Another Image
@@ -915,116 +630,171 @@
     </main>
 
     <script>
-        // Theme switcher
+        let currentFile = null;
+
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            renderHeatmap();
-        }
-
-        // Grad-CAM simulation canvas
-        function renderHeatmap() {
-            const canvas = document.getElementById('heatmapCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
-
-            ctx.clearRect(0, 0, w, h);
-
-            const g1 = ctx.createRadialGradient(w * 0.45, h * 0.4, 15, w * 0.45, h * 0.4, 160);
-            g1.addColorStop(0, 'rgba(255, 30, 30, 0.9)');
-            g1.addColorStop(0.4, 'rgba(255, 180, 0, 0.7)');
-            g1.addColorStop(0.8, 'rgba(0, 120, 255, 0.3)');
-            g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = g1;
-            ctx.fillRect(0, 0, w, h);
-
-            const g2 = ctx.createRadialGradient(w * 0.65, h * 0.65, 10, w * 0.65, h * 0.65, 120);
-            g2.addColorStop(0, 'rgba(255, 60, 60, 0.8)');
-            g2.addColorStop(0.5, 'rgba(255, 200, 0, 0.5)');
-            g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = g2;
-            ctx.fillRect(0, 0, w, h);
         }
 
         function setOpacity(val) {
-            document.getElementById('heatmapCanvas').style.opacity = (val / 100);
+            document.getElementById('resultHeatmap').style.opacity = (val / 100);
             document.getElementById('opacityBadge').innerText = val + '%';
-        }
-
-        function showResults() {
-            document.getElementById('landingView').style.display = 'none';
-            document.getElementById('resultsView').style.display = 'block';
-            renderHeatmap();
         }
 
         function resetToLanding() {
             document.getElementById('resultsView').style.display = 'none';
             document.getElementById('landingView').style.display = 'flex';
+            document.getElementById('loadingSpinner').style.display = 'none';
             document.getElementById('fileInput').value = '';
+            currentFile = null;
         }
 
         document.getElementById('fileInput').addEventListener('change', function(e) {
             if (this.files && this.files[0]) {
-                const file = this.files[0];
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    document.getElementById('resultImage').src = evt.target.result;
-                    document.getElementById('targetFileName').innerText = file.name;
-                    document.getElementById('stageWatermark').innerText = file.name;
-                    showResults();
-                };
-                reader.readAsDataURL(file);
+                currentFile = this.files[0];
+                uploadAndAnalyze(currentFile);
             }
         });
 
-        function analyzePreset(type) {
-            if (type === 'backpack') {
-                document.getElementById('resultImage').src = 'real_object_image.jpeg';
-                document.getElementById('targetFileName').innerText = 'real_object_image.jpeg';
-                document.getElementById('stageWatermark').innerText = 'real_object_image.jpeg (Ground Truth Real)';
-                
-                const pill = document.getElementById('statusPill');
-                pill.className = 'status-pill inconclusive';
-                pill.innerText = 'Inconclusive / Mixed Signals';
-                document.getElementById('verdictMainText').innerText = 'Smartphone HDR Processing Detected';
-                document.getElementById('verdictScore').innerText = '52%';
-                document.getElementById('calibratedFill').style.width = '52%';
-                document.getElementById('calibratedFill').style.backgroundColor = '#D97706';
-                document.getElementById('verdictSummary').innerHTML = '<strong>Confidence Calibration:</strong> Visual model score elevated due to smartphone computational sharpening (HDR). Physical camera hardware metadata confirms authentic optical capture.';
-                
-                document.getElementById('cue1').innerText = 'Attention localized on high-contrast fabric boundaries and zipper hardware.';
-                document.getElementById('cue2').innerText = 'Global illumination angle and ambient shadows match physical scene geometry.';
-                
-                document.getElementById('exifDevice').innerText = 'Smartphone Camera';
-                document.getElementById('exifSensor').innerText = 'Physical CMOS Sensor';
-                document.getElementById('exifExposure').innerText = 'f/1.8 • 1/120s • ISO 125';
-                document.getElementById('exifSignature').innerText = 'Hardware ISP Verified';
-            } else {
-                document.getElementById('resultImage').src = 'image.png';
-                document.getElementById('targetFileName').innerText = 'synthetic_sample.png';
-                document.getElementById('stageWatermark').innerText = 'synthetic_sample.png (Ground Truth Fake)';
-                
-                const pill = document.getElementById('statusPill');
-                pill.className = 'status-pill synthetic';
-                pill.innerText = 'Likely AI-Generated';
-                document.getElementById('verdictMainText').innerText = 'Diffusion Latent Artifacts Detected';
-                document.getElementById('verdictScore').innerText = '92%';
-                document.getElementById('calibratedFill').style.width = '92%';
-                document.getElementById('calibratedFill').style.backgroundColor = '#DC2626';
-                document.getElementById('verdictSummary').innerHTML = '<strong>Forensic Cues:</strong> Irregular spatial frequency distribution and latent diffusion texture artifacts detected in attention zones. Missing hardware sensor fingerprints.';
-                
-                document.getElementById('cue1').innerText = 'High-frequency phase distortion detected across repeating textures.';
-                document.getElementById('cue2').innerText = 'Synthetic reflection vectors conflict with physical light sources.';
-                
-                document.getElementById('exifDevice').innerText = 'None Detected';
-                document.getElementById('exifSensor').innerText = 'Missing Hardware Profile';
-                document.getElementById('exifExposure').innerText = 'N/A (Synthetic Canvas)';
-                document.getElementById('exifSignature').innerText = 'Unsigned / Stripped';
+        // Universal Drag & Drop Support
+        const dropZone = document.getElementById('geminiDropPill');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            window.addEventListener(eventName, e => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+        window.addEventListener('dragover', () => {
+            if (dropZone) dropZone.style.boxShadow = '0 0 0 3px rgba(36, 84, 59, 0.3), 0 12px 36px rgba(0,0,0,0.12)';
+        });
+        window.addEventListener('dragleave', () => {
+            if (dropZone) dropZone.style.boxShadow = '';
+        });
+        window.addEventListener('drop', (e) => {
+            if (dropZone) dropZone.style.boxShadow = '';
+            const dt = e.dataTransfer;
+            if (dt && dt.files && dt.files[0]) {
+                currentFile = dt.files[0];
+                uploadAndAnalyze(currentFile);
             }
-            showResults();
+        });
+
+        // Clipboard Paste Support (Ctrl+V)
+        window.addEventListener('paste', (e) => {
+            const items = (e.clipboardData || window.clipboardData)?.items;
+            if (!items) return;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const blob = items[i].getAsFile();
+                    currentFile = new File([blob], 'clipboard_capture.png', { type: blob.type });
+                    uploadAndAnalyze(currentFile);
+                    break;
+                }
+            }
+        });
+
+        function reanalyzeWithStress() {
+            if (currentFile) {
+                uploadAndAnalyze(currentFile);
+            }
+        }
+
+        async function uploadAndAnalyze(file) {
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = 'block';
+
+            // Show local preview immediately
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                document.getElementById('resultImage').src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append('file', file);
+            const simulateJpeg = document.getElementById('toggleJpeg')?.checked || false;
+            formData.append('simulate_jpeg', simulateJpeg);
+
+            try {
+                const endpoint = window.location.origin.startsWith('http') ? '/api/analyze' : 'http://127.0.0.1:8000/api/analyze';
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                renderResults(data, file.name);
+            } catch (err) {
+                console.error("Analysis failed:", err);
+                alert("Forensic analysis failed: " + err.message);
+                spinner.style.display = 'none';
+            }
+        }
+
+        function renderResults(data, fileName) {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('landingView').style.display = 'none';
+            document.getElementById('resultsView').style.display = 'block';
+
+            // Target Name
+            document.getElementById('targetFileName').innerText = fileName;
+            document.getElementById('stageWatermark').innerText = fileName;
+
+            // Verdict
+            const pill = document.getElementById('statusPill');
+            pill.className = 'status-pill ' + data.verdict_status;
+            pill.innerText = data.verdict_status.toUpperCase();
+
+            document.getElementById('verdictMainText').innerText = data.verdict_title;
+            document.getElementById('verdictScore').innerText = data.ai_probability + '%';
+            
+            const fill = document.getElementById('calibratedFill');
+            fill.style.width = Math.min(Math.max(data.ai_probability, 5), 100) + '%';
+            if (data.verdict_status === 'authentic') fill.style.backgroundColor = '#059669';
+            else if (data.verdict_status === 'inconclusive') fill.style.backgroundColor = '#D97706';
+            else fill.style.backgroundColor = '#DC2626';
+
+            document.getElementById('verdictSummary').innerHTML = '<strong>Forensic Calibration:</strong> ' + data.summary;
+
+            // Heatmap
+            if (data.heatmap_base64) {
+                document.getElementById('resultHeatmap').src = data.heatmap_base64;
+            }
+
+            // Cues
+            const cuesBox = document.getElementById('cuesStrip');
+            cuesBox.innerHTML = '';
+            if (data.cues && data.cues.length > 0) {
+                data.cues.forEach(cue => {
+                    const div = document.createElement('div');
+                    div.className = 'cue-item';
+                    div.innerHTML = `<span class="cue-dot"></span><span>${cue}</span>`;
+                    cuesBox.appendChild(div);
+                });
+            }
+
+            // EXIF
+            if (data.exif) {
+                document.getElementById('exifDevice').innerText = data.exif.device_model || 'Not Found';
+                document.getElementById('exifSensor').innerText = data.exif.is_hardware_camera ? 'Physical CMOS Sensor' : 'Missing Sensor Profile';
+                const exposureParts = [data.exif.f_number, data.exif.exposure_time, data.exif.iso].filter(x => x && x !== 'N/A');
+                document.getElementById('exifExposure').innerText = exposureParts.length > 0 ? exposureParts.join(' • ') : 'N/A (Synthetic Canvas)';
+                document.getElementById('exifSignature').innerText = data.exif.is_hardware_camera ? 'Hardware ISP Verified' : 'Unsigned / Stripped';
+            }
+
+            // Fourier Optical Spectrum (PDF Section 11)
+            if (data.fft_analysis) {
+                document.getElementById('fftDecay').innerText = data.fft_analysis.freq_decay_ratio + ' ratio';
+                document.getElementById('fftOptics').innerText = data.fft_analysis.is_natural_optics ? 'Verified Physical Glass' : 'Non-Optical Profile';
+                document.getElementById('fftGrid').innerText = data.fft_analysis.is_natural_optics ? 'None (Clean)' : 'Artifacts Flagged';
+            }
         }
     </script>
 </body>

@@ -467,13 +467,13 @@
             <h1 class="hero-title">Verify Any Image with <span>SignalScope</span></h1>
             <p class="hero-subtitle">Detect AI-generated media, inspect camera provenance, and interpret model decisions with visual heatmaps.</p>
 
-            <div class="gemini-pill" onclick="document.getElementById('fileInput').click()">
+            <div class="gemini-pill" id="geminiDropPill" onclick="document.getElementById('fileInput').click()">
                 <div class="upload-plus-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </div>
-                <div class="pill-placeholder">Drop an image here, or click to browse</div>
+                <div class="pill-placeholder">Drop an image here, paste (Ctrl+V), or click to browse</div>
                 <div class="pill-action-badge">Analyze Media</div>
-                <input type="file" id="fileInput" accept="image/*">
+                <input type="file" id="fileInput" accept="image/*" onclick="event.stopPropagation()">
             </div>
 
             <div id="loadingSpinner">⏳ Running ViT-B/16 Self-Attention & EXIF Forensics...</div>
@@ -498,6 +498,18 @@
                             <div class="exif-row"><span class="exif-k">Sensor</span><span class="exif-v" id="exifSensor">CMOS Sensor</span></div>
                             <div class="exif-row"><span class="exif-k">Exposure</span><span class="exif-v" id="exifExposure">f/1.8 • 1/120s • ISO 125</span></div>
                             <div class="exif-row"><span class="exif-k">Signature</span><span class="exif-v" id="exifSignature">Hardware ISP Verified</span></div>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="group-label" style="display: flex; justify-content: space-between;">
+                            <span>Fourier Optical Spectrum</span>
+                            <span style="color: #24543B; font-weight: 700;">Section 11</span>
+                        </div>
+                        <div class="exif-list">
+                            <div class="exif-row"><span class="exif-k">Lens Decay (1/f)</span><span class="exif-v" id="fftDecay">--</span></div>
+                            <div class="exif-row"><span class="exif-k">Optics Physics</span><span class="exif-v" id="fftOptics">--</span></div>
+                            <div class="exif-row"><span class="exif-k">Latent Grid</span><span class="exif-v" id="fftGrid">--</span></div>
                         </div>
                     </div>
 
@@ -646,6 +658,44 @@
             }
         });
 
+        // Universal Drag & Drop Support
+        const dropZone = document.getElementById('geminiDropPill');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            window.addEventListener(eventName, e => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+        window.addEventListener('dragover', () => {
+            if (dropZone) dropZone.style.boxShadow = '0 0 0 3px rgba(36, 84, 59, 0.3), 0 12px 36px rgba(0,0,0,0.12)';
+        });
+        window.addEventListener('dragleave', () => {
+            if (dropZone) dropZone.style.boxShadow = '';
+        });
+        window.addEventListener('drop', (e) => {
+            if (dropZone) dropZone.style.boxShadow = '';
+            const dt = e.dataTransfer;
+            if (dt && dt.files && dt.files[0]) {
+                currentFile = dt.files[0];
+                uploadAndAnalyze(currentFile);
+            }
+        });
+
+        // Clipboard Paste Support (Ctrl+V)
+        window.addEventListener('paste', (e) => {
+            const items = (e.clipboardData || window.clipboardData)?.items;
+            if (!items) return;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const blob = items[i].getAsFile();
+                    currentFile = new File([blob], 'clipboard_capture.png', { type: blob.type });
+                    uploadAndAnalyze(currentFile);
+                    break;
+                }
+            }
+        });
+
         function reanalyzeWithStress() {
             if (currentFile) {
                 uploadAndAnalyze(currentFile);
@@ -669,7 +719,8 @@
             formData.append('simulate_jpeg', simulateJpeg);
 
             try {
-                const response = await fetch('/api/analyze', {
+                const endpoint = window.location.origin.startsWith('http') ? '/api/analyze' : 'http://127.0.0.1:8000/api/analyze';
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     body: formData
                 });
@@ -736,6 +787,13 @@
                 const exposureParts = [data.exif.f_number, data.exif.exposure_time, data.exif.iso].filter(x => x && x !== 'N/A');
                 document.getElementById('exifExposure').innerText = exposureParts.length > 0 ? exposureParts.join(' • ') : 'N/A (Synthetic Canvas)';
                 document.getElementById('exifSignature').innerText = data.exif.is_hardware_camera ? 'Hardware ISP Verified' : 'Unsigned / Stripped';
+            }
+
+            // Fourier Optical Spectrum (PDF Section 11)
+            if (data.fft_analysis) {
+                document.getElementById('fftDecay').innerText = data.fft_analysis.freq_decay_ratio + ' ratio';
+                document.getElementById('fftOptics').innerText = data.fft_analysis.is_natural_optics ? 'Verified Physical Glass' : 'Non-Optical Profile';
+                document.getElementById('fftGrid').innerText = data.fft_analysis.is_natural_optics ? 'None (Clean)' : 'Artifacts Flagged';
             }
         }
     </script>
