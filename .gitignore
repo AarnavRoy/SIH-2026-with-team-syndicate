@@ -1,0 +1,22 @@
+# Model weights (>100MB exceeds GitHub push limit, hosted via Releases/Drive per PDF Section 7.1)
+*.pth
+*.pt
+*.bin
+*.onnx
+
+# Python cache & envs
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.history/
+*.log
