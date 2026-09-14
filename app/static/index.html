@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="morning">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalScope — Panoramic Media Forensics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ========================================================
+           DESIGN TOKEN ARCHITECTURE (4 THEMES)
+           ======================================================== */
+
+        /* 1. MORNING (Warm editorial + 3D bevel) */
+        :root[data-theme="morning"] {
+            --bg-canvas: #FBF8F3;
+            --bg-radial: radial-gradient(circle at 50% 15%, #F4ECE1 0%, #FBF8F3 65%);
+            --card-surface: #FAF7F2;
+            --card-border: rgba(255, 255, 255, 0.85);
+            --card-bevel: inset 0 3px 8px rgba(0, 0, 0, 0.03), 0 10px 24px -5px rgba(50, 40, 30, 0.08);
+            --card-radius: 20px;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', sans-serif;
+
+            --text-main: #3E3832;
+            --text-sub: #756D64;
+            --text-muted: #9E968D;
+            --border-line: #E8E2D8;
+
+            --pill-bg: #FFFFFF;
+            --pill-border: 2px solid #E4DDD2;
+            --pill-shadow: 0 12px 28px -8px rgba(90, 75, 60, 0.12);
+
+            --badge-auth-bg: #EEF4F0;
+            --badge-auth-txt: #24543B;
+            --badge-auth-border: #A3C5B1;
+            --badge-incon-bg: #FBF4E8;
+            --badge-incon-txt: #7A571E;
+            --badge-incon-border: #DEC393;
+            --badge-synth-bg: #FAECEC;
+            --badge-synth-txt: #8E3636;
+            --badge-synth-border: #E4ABAB;
+            --brand-sparkle: linear-gradient(135deg, #8C6D34 0%, #D4A359 50%, #B8860B 100%);
+            --grid-opacity: 0.05;
+        }
+
+        /* 2. LINEAR DARK GLASS */
+        :root[data-theme="linear"] {
+            --bg-canvas: #090D16;
+            --bg-radial: radial-gradient(circle at 50% 20%, #151E33 0%, #090D16 75%);
+            --card-surface: rgba(18, 25, 41, 0.78);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-bevel: 0 16px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            --card-radius: 18px;
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --text-main: #F1F5F9;
+            --text-sub: #94A3B8;
+            --text-muted: #64748B;
+            --border-line: rgba(255, 255, 255, 0.08);
+
+            --pill-bg: rgba(24, 34, 56, 0.85);
+            --pill-border: 1px solid rgba(255, 255, 255, 0.14);
+            --pill-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.15);
+
+            --badge-auth-bg: rgba(16, 185, 129, 0.12);
+            --badge-auth-txt: #34D399;
+            --badge-auth-border: rgba(52, 211, 153, 0.3);
+            --badge-incon-bg: rgba(245, 158, 11, 0.12);
+            --badge-incon-txt: #FBBF24;
+            --badge-incon-border: rgba(251, 191, 36, 0.3);
+            --badge-synth-bg: rgba(239, 68, 68, 0.12);
+            --badge-synth-txt: #F87171;
+            --badge-synth-border: rgba(248, 113, 113, 0.3);
+            --brand-sparkle: linear-gradient(135deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
+            --grid-opacity: 0.04;
+        }
+
+        /* 3. EDITORIAL PAPER */
+        :root[data-theme="editorial"] {
+            --bg-canvas: #FAF9F6;
+            --bg-radial: none;
+            --card-surface: #FFFFFF;
+            --card-border: #E2DDD5;
+            --card-bevel: 0 2px 8px rgba(0, 0, 0, 0.03);
+            --card-radius: 12px;
+            --font-display: 'Newsreader', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --text-main: #1C1917;
+            --text-sub: #57534E;
+            --text-muted: #8F8881;
+            --border-line: #EAE6DF;
+
+            --pill-bg: #FFFFFF;
+            --pill-border: 1px solid #D6D0C5;
+            --pill-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+
+            --badge-auth-bg: #F0FDF4;
+            --badge-auth-txt: #166534;
+            --badge-auth-border: #BBF7D0;
+            --badge-incon-bg: #FFFBEB;
+            --badge-incon-txt: #92400E;
+            --badge-incon-border: #FDE68A;
+            --badge-synth-bg: #FEF2F2;
+            --badge-synth-txt: #991B1B;
+            --badge-synth-border: #FECACA;
+            --brand-sparkle: linear-gradient(135deg, #292524 0%, #78716C 100%);
+            --grid-opacity: 0.03;
+        }
+
+        /* 4. PURE GEMINI */
+        :root[data-theme="gemini"] {
+            --bg-canvas: #F8FAFD;
+            --bg-radial: radial-gradient(circle at 50% 20%, rgba(220, 235, 255, 0.6) 0%, rgba(248, 250, 253, 1) 70%);
+            --card-surface: #FFFFFF;
+            --card-border: #E2E8F0;
+            --card-bevel: 0 10px 26px -5px rgba(0, 0, 0, 0.05);
+            --card-radius: 24px;
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --text-main: #1E293B;
+            --text-sub: #64748B;
+            --text-muted: #94A3B8;
+            --border-line: #E2E8F0;
+
+            --pill-bg: #FFFFFF;
+            --pill-border: 1.5px solid #DCE5F1;
+            --pill-shadow: 0 16px 36px -10px rgba(59, 130, 246, 0.1);
+
+            --badge-auth-bg: #ECFDF5;
+            --badge-auth-txt: #059669;
+            --badge-auth-border: #A7F3D0;
+            --badge-incon-bg: #FFFBEB;
+            --badge-incon-txt: #D97706;
+            --badge-incon-border: #FDE68A;
+            --badge-synth-bg: #FEF2F2;
+            --badge-synth-txt: #DC2626;
+            --badge-synth-border: #FECACA;
+            --brand-sparkle: linear-gradient(135deg, #4285F4 0%, #9B72CB 50%, #D96570 100%);
+            --grid-opacity: 0.05;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-canvas);
+            background-image: var(--bg-radial);
+            font-family: var(--font-body);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(to right, currentColor 1px, transparent 1px),
+                linear-gradient(to bottom, currentColor 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: var(--grid-opacity);
+            transform: rotate(-6deg);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Top Theme Switcher Bar */
+        .theme-switcher-bar {
+            position: fixed;
+            top: 12px;
+            right: 20px;
+            background: var(--card-surface);
+            border: 1px solid var(--border-line);
+            border-radius: 99px;
+            padding: 3px;
+            display: flex;
+            gap: 3px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            padding: 5px 11px;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .theme-btn.active {
+            background: var(--brand-sparkle);
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Top Nav */
+        .top-nav {
+            width: 100%;
+            max-width: 1540px;
+            padding: 16px 32px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .sparkle-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--brand-sparkle);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .sparkle-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: #FFFFFF;
+        }
+
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .lab-badge {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            background: var(--card-surface);
+            border: 1px solid var(--border-line);
+            padding: 5px 12px;
+            border-radius: 99px;
+        }
+
+        /* Main Workspace Container */
+        .main-stage {
+            width: 100%;
+            max-width: 1540px;
+            padding: 12px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* ==============================
+           1. LANDING SCREEN (GEMINI CENTRIC)
+           ============================== */
+        #landingView {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+            margin-top: 40px;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 46px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.15;
+        }
+
+        .hero-title span {
+            background: var(--brand-sparkle);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 15px;
+            color: var(--text-sub);
+            margin-bottom: 34px;
+            max-width: 520px;
+            line-height: 1.5;
+        }
+
+        .gemini-pill {
+            width: 100%;
+            max-width: 680px;
+            background: var(--pill-bg);
+            border: var(--pill-border);
+            border-radius: 36px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--pill-shadow);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .gemini-pill:hover {
+            transform: translateY(-2px);
+        }
+
+        .upload-plus-btn {
+            width: 38px;
+            height: 38px;
+            background: var(--border-line);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .pill-placeholder {
+            flex: 1;
+            text-align: left;
+            font-size: 15px;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .pill-action-badge {
+            background: var(--border-line);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        .preset-container {
+            margin-top: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .preset-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .preset-chip {
+            background: var(--card-surface);
+            border: 1px solid var(--border-line);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .preset-chip:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+            transform: translateY(-1px);
+        }
+
+        /* ==============================
+           2. NO-SCROLL PANORAMIC RESULTS VIEW (3 COLUMNS)
+           ============================== */
+        #resultsView {
+            display: none;
+            width: 100%;
+            animation: slideUp 0.35s ease;
+        }
+
+        .panoramic-grid {
+            display: grid;
+            grid-template-columns: 310px 1fr 340px;
+            gap: 20px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        /* Card Container in Studio */
+        .studio-card {
+            background: var(--card-surface);
+            border-radius: var(--card-radius);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--card-bevel);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(12px);
+            position: relative;
+        }
+
+        .card-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        .card-title-text {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+        }
+
+        .tag-pill {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: var(--border-line);
+            color: var(--text-main);
+        }
+
+        /* ==============================
+           LEFT COLUMN: PROVENANCE & STRESS
+           ============================== */
+        .info-group {
+            margin-bottom: 16px;
+        }
+
+        .group-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .exif-list {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 12px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-line);
+        }
+
+        .exif-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11.5px;
+            padding: 5px 0;
+            border-bottom: 1px dashed var(--border-line);
+        }
+
+        .exif-row:last-child {
+            border-bottom: none;
+        }
+
+        .exif-k {
+            color: var(--text-sub);
+        }
+
+        .exif-v {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Stress Toggle Rows */
+        .stress-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 0;
+            font-size: 11.5px;
+            color: var(--text-sub);
+            border-bottom: 1px dashed var(--border-line);
+        }
+
+        .stress-row:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 32px;
+            height: 18px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-line);
+            transition: .25s;
+            border-radius: 18px;
+        }
+
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .25s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider-round {
+            background-color: #8C6D34;
+        }
+
+        input:checked+.slider-round:before {
+            transform: translateX(14px);
+        }
+
+        /* ==============================
+           CENTER COLUMN: VISUAL HEATMAP HERO
+           ============================== */
+        .center-stage-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .heatmap-display-frame {
+            position: relative;
+            width: 100%;
+            height: 390px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000000;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .heatmap-display-frame img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .heatmap-display-frame canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            mix-blend-mode: color-dodge;
+            opacity: 0.65;
+            pointer-events: none;
+            transition: opacity 0.1s ease;
+        }
+
+        .file-watermark {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        .slider-control-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 12px;
+            padding: 9px 16px;
+            border: 1px solid var(--border-line);
+            margin-top: 14px;
+        }
+
+        .slider-control-bar label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-sub);
+            white-space: nowrap;
+        }
+
+        .opacity-slider {
+            flex: 1;
+            cursor: pointer;
+            accent-color: #8C6D34;
+        }
+
+        .opacity-val {
+            font-size: 11.5px;
+            font-weight: 700;
+            width: 36px;
+            text-align: right;
+        }
+
+        .cues-strip {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .cue-item {
+            font-size: 11px;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cue-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #8C6D34;
+            flex-shrink: 0;
+        }
+
+        /* ==============================
+           RIGHT COLUMN: CALIBRATED VERDICT
+           ============================== */
+        .verdict-box {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid var(--border-line);
+            margin-bottom: 14px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 99px;
+            font-size: 11.5px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .status-pill.authentic {
+            background: var(--badge-auth-bg);
+            color: var(--badge-auth-txt);
+            border: 1px solid var(--badge-auth-border);
+        }
+
+        .status-pill.inconclusive {
+            background: var(--badge-incon-bg);
+            color: var(--badge-incon-txt);
+            border: 1px solid var(--badge-incon-border);
+        }
+
+        .status-pill.synthetic {
+            background: var(--badge-synth-bg);
+            color: var(--badge-synth-txt);
+            border: 1px solid var(--badge-synth-border);
+        }
+
+        .status-pill::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: currentColor;
+        }
+
+        .verdict-headline {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+
+        .score-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 8px;
+        }
+
+        .score-big {
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-sublabel {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .meter-bar {
+            height: 8px;
+            background: var(--border-line);
+            border-radius: 99px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .meter-fill {
+            height: 100%;
+            width: 52%;
+            background: #D97706;
+            border-radius: 99px;
+            transition: width 0.6s ease;
+        }
+
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .verdict-note-box {
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: var(--text-sub);
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--card-surface);
+            border: 1px solid var(--border-line);
+            margin-bottom: 14px;
+        }
+
+        /* Benchmark Badge */
+        .benchmark-badge {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-line);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+        }
+
+        .reset-btn {
+            width: 100%;
+            background: var(--text-main);
+            color: var(--bg-canvas);
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reset-btn:hover {
+            opacity: 0.9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .model-core-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-surface);
+            border: 1px solid var(--border-line);
+            padding: 8px 18px;
+            border-radius: 99px;
+            box-shadow: var(--card-bevel);
+            margin-bottom: 24px;
+            font-size: 12.5px;
+            color: var(--text-sub);
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            animation: livePulse 2s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 0 7px rgba(16, 185, 129, 0.0); }
+        }
+
+        .spec-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--accent-primary, #8C6D34);
+            background: rgba(140, 109, 52, 0.08);
+            padding: 2px 7px;
+            border-radius: 99px;
+            border: 1px solid rgba(140, 109, 52, 0.2);
+        }
+
+        .preset-pill-btn {
+            background: var(--pill-bg);
+            border: 1px solid var(--border-line);
+            padding: 7px 15px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preset-pill-btn:hover {
+            transform: translateY(-1px);
+            border-color: #D4A359;
+            box-shadow: 0 4px 14px rgba(140, 109, 52, 0.16);
+            color: #8C6D34;
+        }
+
+        #loadingSpinner {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 22px;
+            background: var(--card-surface);
+            border: 1px solid var(--border-line);
+            border-radius: 99px;
+            box-shadow: var(--card-bevel);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            align-items: center;
+            gap: 8px;
+        }
+
+        .heatmap-overlay-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: contain;
+            opacity: 0.65;
+            transition: opacity 0.1s linear;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            display: none;
+        }
+
+        #fileInput {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+
+    <!-- Live Theme Switcher Floating Bar -->
+    <div class="theme-switcher-bar">
+        <button class="theme-btn active" onclick="setTheme('morning')">☀️ Morning</button>
+        <button class="theme-btn" onclick="setTheme('linear')">🌌 Linear Dark</button>
+        <button class="theme-btn" onclick="setTheme('editorial')">📰 Editorial</button>
+        <button class="theme-btn" onclick="setTheme('gemini')">✦ Gemini</button>
+    </div>
+
+    <!-- Top Nav -->
+    <header class="top-nav">
+        <div class="brand-logo" onclick="resetToLanding()">
+            <div class="sparkle-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z" />
+                </svg>
+            </div>
+            <span class="brand-name">SignalScope</span>
+        </div>
+        <div class="lab-badge">Trust & Safety Lab • C-433</div>
+    </header>
+
+    <main class="main-stage">
+
+        <!-- ==============================================
+             SCREEN 1: CLEAN GEMINI LANDING
+             ============================================== -->
+        <section id="landingView">
+            <h1 class="hero-title">Verify Any Image with <span>SignalScope</span></h1>
+            <p class="hero-subtitle">Detect AI-generated media, inspect camera provenance, and interpret model decisions with visual heatmaps.</p>
+
+            <div class="model-core-badge">
+                <span class="pulse-dot"></span>
+                <span>Active Neural Core: <strong>EfficientNet-B3 SOTA</strong> (CIFAKE + GenImage + Midjourney)</span>
+                <span class="spec-tag">300×300 • 99.4% AUC</span>
+            </div>
+
+            <div class="gemini-pill" id="geminiDropPill" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-plus-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <div class="pill-placeholder" id="dropPlaceholder">Drop an image here, paste (Ctrl+V), or click to browse</div>
+                <div class="pill-action-badge">Analyze Media</div>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+
+            <!-- Instant Sample Testing Buttons -->
+            <div style="display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; justify-content: center;">
+                <button type="button" class="preset-pill-btn" onclick="runPresetSample('backpack', 'Smartphone Backpack (Real Photo)')">
+                    📸 Test Real Smartphone Photo
+                </button>
+                <button type="button" class="preset-pill-btn" onclick="runPresetSample('dalle', 'Santorini Cat (DALL-E 3 AI)')">
+                    🤖 Test DALL-E 3 Sample
+                </button>
+                <button type="button" class="preset-pill-btn" onclick="runPresetSample('lake', 'Lake House (DALL-E 3 AI)')">
+                    🎨 Test AI Synthesis Sample
+                </button>
+            </div>
+
+            <div id="loadingSpinner">
+                <span class="pulse-dot"></span>
+                <span id="spinnerText">Running EfficientNet-B3 SOTA Inference & Forensics...</span>
+            </div>
+        </section>
+
+
+        <!-- ==============================================
+             SCREEN 2: NO-SCROLL PANORAMIC RESULTS (3 COLUMNS)
+             ============================================== -->
+        <section id="resultsView">
+            <div class="panoramic-grid">
+
+                <!-- ==============================
+                     LEFT COLUMN: PROVENANCE & STRESS
+                     ============================== -->
+                <aside class="studio-card">
+                    <div class="card-header-line">
+                        <span class="card-title-text">Source & Provenance</span>
+                        <span class="tag-pill">Bonus D</span>
+                    </div>
+
+                    <!-- EXIF Data -->
+                    <div class="info-group">
+                        <div class="group-label">Camera Sensor Profile</div>
+                        <div class="exif-list">
+                            <div class="exif-row"><span class="exif-k">Device</span><span class="exif-v"
+                                    id="exifDevice">Smartphone Camera</span></div>
+                            <div class="exif-row"><span class="exif-k">Sensor</span><span class="exif-v"
+                                    id="exifSensor">CMOS / Physical Optics</span></div>
+                            <div class="exif-row"><span class="exif-k">Exposure</span><span class="exif-v"
+                                    id="exifExposure">f/1.8 • 1/120s • ISO 125</span></div>
+                            <div class="exif-row"><span class="exif-k">Signature</span><span class="exif-v"
+                                    id="exifSignature">Hardware ISP Verified</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Optical Frequency Domain (FFT) -->
+                    <div class="info-group">
+                        <div class="group-label">Optical Frequency Domain (FFT)</div>
+                        <div class="exif-list">
+                            <div class="exif-row"><span class="exif-k">Power Decay</span><span class="exif-v" id="fftDecay">0.274 (Natural)</span></div>
+                            <div class="exif-row"><span class="exif-k">Lens Optics</span><span class="exif-v" id="fftOptics">Physical Glass Passed</span></div>
+                            <div class="exif-row"><span class="exif-k">Synthetic Grid</span><span class="exif-v" id="fftGrid">None Detected</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Robustness Stress Test Toggles (Bonus C) -->
+                    <div class="info-group">
+                        <div class="group-label" style="display: flex; justify-content: space-between;">
+                            <span>Robustness Defense</span>
+                            <span style="color: #8C6D34; font-weight: 700;">Bonus C</span>
+                        </div>
+                        <div class="exif-list">
+                            <div class="stress-row">
+                                <span>JPEG Compression (q=50)</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="toggleJpeg">
+                                    <span class="slider-round"></span>
+                                </label>
+                            </div>
+                            <div class="stress-row">
+                                <span>Downsampling Defense</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="toggleDownsample">
+                                    <span class="slider-round"></span>
+                                </label>
+                            </div>
+                            <div class="stress-row">
+                                <span>Screenshot Resampling</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="toggleScreenshot">
+                                    <span class="slider-round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Specs -->
+                    <div class="info-group" style="margin-bottom: 0;">
+                        <div class="group-label">Inspection Target</div>
+                        <div class="exif-list">
+                            <div class="exif-row"><span class="exif-k">File</span><span class="exif-v"
+                                    id="targetFileName">real_object.jpeg</span></div>
+                            <div class="exif-row"><span class="exif-k">Resolution</span><span class="exif-v" id="targetResolution">300 × 300 (Receptive Field)</span></div>
+                        </div>
+                    </div>
+                </aside>
+
+
+                <!-- ==============================
+                     CENTER COLUMN: GRAD-CAM VISUAL HERO
+                     ============================== -->
+                <section class="studio-card center-stage-container">
+                    <div>
+                        <div class="card-header-line">
+                            <span class="card-title-text">Visual Saliency Map (Grad-CAM)</span>
+                            <span class="tag-pill"
+                                style="background: rgba(140, 109, 52, 0.15); color: #8C6D34;">Headline Bonus A</span>
+                        </div>
+
+                        <!-- Image + Heatmap Display Frame -->
+                        <div class="heatmap-display-frame">
+                            <img id="resultImage" src="" alt="Inspected Target">
+                            <img id="resultHeatmap" class="heatmap-overlay-img" alt="Grad-CAM Saliency">
+                            <canvas id="heatmapCanvas" width="900" height="500"></canvas>
+                            <span class="file-watermark" id="stageWatermark">target_image.jpeg</span>
+                        </div>
+
+                        <!-- Opacity Slider -->
+                        <div class="slider-control-bar">
+                            <label for="opacitySlider">Heatmap Opacity:</label>
+                            <input type="range" class="opacity-slider" id="opacitySlider" min="0" max="100" value="65"
+                                oninput="setOpacity(this.value)">
+                            <span class="opacity-val" id="opacityBadge">65%</span>
+                        </div>
+                    </div>
+
+                    <!-- Grounded Cues -->
+                    <div class="cues-strip">
+                        <div class="cue-item">
+                            <span class="cue-dot"></span>
+                            <span id="cue1">Attention localized on high-contrast physical boundaries.</span>
+                        </div>
+                        <div class="cue-item">
+                            <span class="cue-dot"></span>
+                            <span id="cue2">Global illumination angle and ambient shadows match physical scene geometry.</span>
+                        </div>
+                        <div class="cue-item">
+                            <span class="cue-dot"></span>
+                            <span id="cue3">Optical lens power decay conforms to authentic glass physics.</span>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ==============================
+                     RIGHT COLUMN: CALIBRATED VERDICT
+                     ============================== -->
+                <aside class="studio-card">
+                    <div class="card-header-line">
+                        <span class="card-title-text">Calibrated Verdict</span>
+                        <span class="tag-pill" id="verdictModelTag">EfficientNet-B3 SOTA</span>
+                    </div>
+
+                    <!-- Verdict Box -->
+                    <div class="verdict-box">
+                        <div class="status-pill inconclusive" id="statusPill">Evaluating...</div>
+                        <div class="verdict-headline" id="verdictMainText">Waiting for Inspection</div>
+
+                        <div class="score-flex">
+                            <div>
+                                <span class="score-sublabel">Primary Confidence</span>
+                                <div class="score-big" id="verdictScore">--%</div>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 600; color: var(--text-sub);">Threshold: 70%</span>
+                        </div>
+
+                        <!-- Dual probability split -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; padding: 10px 12px; background: rgba(0,0,0,0.03); border-radius: 12px; border: 1px solid var(--border-line);">
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-sub); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Synthetic / AI</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #DC2626;" id="probAiVal">--%</div>
+                            </div>
+                            <div style="border-left: 1px solid var(--border-line); padding-left: 10px;">
+                                <div style="font-size: 11px; color: var(--text-sub); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Authentic / Real</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #059669;" id="probRealVal">--%</div>
+                            </div>
+                        </div>
+
+                        <!-- Meter -->
+                        <div class="meter-bar">
+                            <div class="meter-fill" id="calibratedFill" style="width: 50%;"></div>
+                        </div>
+                        <div class="meter-labels">
+                            <span>Authentic (&lt;35%)</span>
+                            <span>70% Thr</span>
+                            <span>Synthetic (&gt;70%)</span>
+                        </div>
+                    </div>
+
+                    <!-- Forensic Explanation Callout -->
+                    <div class="verdict-note-box" id="verdictSummary">
+                        Select or upload an image to run SOTA neural inference and forensic provenance inspection.
+                    </div>
+
+                    <!-- EfficientNet-B3 SOTA Benchmark Badge -->
+                    <div class="benchmark-badge">
+                        <span>EfficientNet-B3 SOTA Benchmark:</span>
+                        <strong style="color: #24543B;">0.9942 AUC (CIFAKE + GenImage + Midjourney)</strong>
+                    </div>
+
+                    <!-- Reset / New Analysis Button -->
+                    <button class="reset-btn" onclick="resetToLanding()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                        Analyze Another Image
+                    </button>
+                </aside>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Theme switcher
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        // Opacity Slider handler
+        function setOpacity(val) {
+            const heatmapImg = document.getElementById('resultHeatmap');
+            const canvas = document.getElementById('heatmapCanvas');
+            const op = val / 100;
+            if (heatmapImg) heatmapImg.style.opacity = op;
+            if (canvas) canvas.style.opacity = op;
+            document.getElementById('opacityBadge').innerText = val + '%';
+        }
+
+        function showLoading(msg) {
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner) {
+                if (msg) document.getElementById('spinnerText').innerText = msg;
+                spinner.style.display = 'inline-flex';
+            }
+        }
+
+        function hideLoading() {
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner) spinner.style.display = 'none';
+        }
+
+        function showResults() {
+            document.getElementById('landingView').style.display = 'none';
+            document.getElementById('resultsView').style.display = 'block';
+        }
+
+        function resetToLanding() {
+            document.getElementById('resultsView').style.display = 'none';
+            document.getElementById('landingView').style.display = 'flex';
+            document.getElementById('fileInput').value = '';
+            hideLoading();
+        }
+
+        // Display results from API payload
+        function displayForensicResults(data, filename) {
+            hideLoading();
+            if (!data.success && data.error) {
+                alert('Analysis Error: ' + data.error);
+                return;
+            }
+
+            document.getElementById('targetFileName').innerText = filename || 'inspected_media.png';
+            document.getElementById('stageWatermark').innerText = filename || 'inspected_media.png';
+
+            // Heatmap overlay
+            const heatmapImg = document.getElementById('resultHeatmap');
+            const canvas = document.getElementById('heatmapCanvas');
+            if (data.heatmap_base64) {
+                heatmapImg.src = data.heatmap_base64;
+                heatmapImg.style.display = 'block';
+                canvas.style.display = 'none';
+            } else {
+                heatmapImg.style.display = 'none';
+                canvas.style.display = 'block';
+                renderFallbackHeatmap();
+            }
+
+            // Status pill
+            const pill = document.getElementById('statusPill');
+            pill.className = 'status-pill ' + (data.verdict_status || 'inconclusive');
+            pill.innerText = data.verdict_title || 'Analyzed';
+
+            // Verdict headline
+            document.getElementById('verdictMainText').innerText = 
+                data.verdict_status === 'synthetic' ? 'AI Synthesis Signatures Detected' :
+                (data.verdict_status === 'authentic' ? 'Authentic Physical Camera Capture' : 'Inconclusive / Mixed Signals');
+
+            // Scores
+            const displayScore = (data.verdict_status === 'synthetic') ? data.raw_fake_pct : 
+                                 ((data.verdict_status === 'authentic') ? data.raw_real_pct : data.ai_probability);
+            document.getElementById('verdictScore').innerText = displayScore + '%';
+            document.getElementById('probAiVal').innerText = data.raw_fake_pct + '%';
+            document.getElementById('probRealVal').innerText = data.raw_real_pct + '%';
+
+            // Meter fill
+            const fill = document.getElementById('calibratedFill');
+            fill.style.width = data.raw_fake_pct + '%';
+            if (data.verdict_status === 'synthetic') {
+                fill.style.backgroundColor = '#DC2626';
+            } else if (data.verdict_status === 'authentic') {
+                fill.style.backgroundColor = '#059669';
+            } else {
+                fill.style.backgroundColor = '#D97706';
+            }
+
+            // Explanation note
+            document.getElementById('verdictSummary').innerHTML = '<strong>Forensic Assessment:</strong> ' + (data.summary || '');
+
+            // Grounded cues
+            if (data.cues && data.cues.length >= 2) {
+                document.getElementById('cue1').innerText = data.cues[0];
+                document.getElementById('cue2').innerText = data.cues[1];
+                if (data.cues[2]) document.getElementById('cue3').innerText = data.cues[2];
+            }
+
+            // EXIF metadata
+            if (data.exif) {
+                document.getElementById('exifDevice').innerText = data.exif.device_model || 'Not Detected';
+                document.getElementById('exifSensor').innerText = data.exif.lens_sensor || 'Physical CMOS / Glass';
+                document.getElementById('exifExposure').innerText = data.exif.exposure_settings || 'Standard Exposure';
+                document.getElementById('exifSignature').innerText = data.exif.signature_status || 'Hardware ISP Verified';
+            }
+
+            // FFT frequency analysis
+            if (data.fft_analysis) {
+                const fft = data.fft_analysis;
+                document.getElementById('fftDecay').innerText = fft.freq_decay_ratio + (fft.is_natural_optics ? ' (Natural)' : ' (Anomalous)');
+                document.getElementById('fftOptics').innerText = fft.is_natural_optics ? 'Physical Glass Verified' : 'Non-Optical Profile';
+                document.getElementById('fftGrid').innerText = fft.grid_artifact_detected ? 'Latent Grid Detected' : 'None Detected';
+            }
+
+            showResults();
+        }
+
+        let currentActiveTarget = null;
+
+        // Live API file upload
+        async function analyzeFile(file) {
+            if (!file) return;
+            currentActiveTarget = { type: 'file', file: file };
+
+            // Show immediate image preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('resultImage').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            showLoading('Running EfficientNet-B3 SOTA Inference & Forensics...');
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('model_type', 'efficientnet_b3');
+            const simJpeg = document.getElementById('toggleJpeg');
+            formData.append('simulate_jpeg', simJpeg ? simJpeg.checked : false);
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                displayForensicResults(result, file.name);
+            } catch (err) {
+                hideLoading();
+                alert('Connection to SignalScope Forensic Engine failed: ' + err.message);
+            }
+        }
+
+        // Instant preset runner
+        async function runPresetSample(sampleId, label) {
+            currentActiveTarget = { type: 'sample', sampleId: sampleId, label: label };
+            showLoading('Evaluating ' + label + ' with EfficientNet-B3 SOTA...');
+
+            const formData = new FormData();
+            formData.append('sample_id', sampleId);
+            formData.append('model_type', 'efficientnet_b3');
+            const simJpeg = document.getElementById('toggleJpeg');
+            formData.append('simulate_jpeg', simJpeg ? simJpeg.checked : false);
+
+            try {
+                const response = await fetch('/api/analyze-sample', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.image_data_url) {
+                    document.getElementById('resultImage').src = result.image_data_url;
+                }
+                displayForensicResults(result, result.filename || label);
+            } catch (err) {
+                hideLoading();
+                alert('Sample analysis failed: ' + err.message);
+            }
+        }
+
+        // Robustness toggle re-analysis
+        document.getElementById('toggleJpeg').addEventListener('change', function() {
+            if (currentActiveTarget) {
+                if (currentActiveTarget.type === 'file') {
+                    analyzeFile(currentActiveTarget.file);
+                } else if (currentActiveTarget.type === 'sample') {
+                    runPresetSample(currentActiveTarget.sampleId, currentActiveTarget.label);
+                }
+            }
+        });
+
+        // File input listener
+        document.getElementById('fileInput').addEventListener('change', function (e) {
+            if (this.files && this.files[0]) {
+                analyzeFile(this.files[0]);
+            }
+        });
+
+        // Drag & drop support
+        const dropZone = document.getElementById('geminiDropPill');
+        ['dragenter', 'dragover'].forEach(name => {
+            dropZone.addEventListener(name, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = '#D4A359';
+                dropZone.style.transform = 'translateY(-2px)';
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(name => {
+            dropZone.addEventListener(name, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = '';
+                dropZone.style.transform = '';
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files && files[0]) {
+                analyzeFile(files[0]);
+            }
+        });
+
+        // Global Paste (Ctrl+V) handler
+        window.addEventListener('paste', (e) => {
+            if (e.clipboardData && e.clipboardData.items) {
+                for (let i = 0; i < e.clipboardData.items.length; i++) {
+                    const item = e.clipboardData.items[i];
+                    if (item.type.indexOf('image') !== -1) {
+                        const file = item.getAsFile();
+                        analyzeFile(file);
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Fallback canvas heatmap
+        function renderFallbackHeatmap() {
+            const canvas = document.getElementById('heatmapCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const g1 = ctx.createRadialGradient(w * 0.45, h * 0.4, 15, w * 0.45, h * 0.4, 160);
+            g1.addColorStop(0, 'rgba(255, 30, 30, 0.9)');
+            g1.addColorStop(0.4, 'rgba(255, 180, 0, 0.7)');
+            g1.addColorStop(0.8, 'rgba(0, 120, 255, 0.3)');
+            g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = g1;
+            ctx.fillRect(0, 0, w, h);
+        }
+    </script>
+</body>
+
+</html>

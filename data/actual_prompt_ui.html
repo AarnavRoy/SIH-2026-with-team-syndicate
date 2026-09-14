@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignalScope - Media Forensics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Background */
+      --bg-start: #FBF9F5;
+      --bg-end: #F3EFEA;
+      /* Cards */
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-border: #EFECE6;
+      /* Text */
+      --text-main: #1A1A1A;
+      --text-muted: #666666;
+      /* Accents */
+      --auth-text: #2D5A43;
+      --auth-bg: #E8F0EB;
+      --inc-text: #8C6D34;
+      --inc-bg: #F8F2E6;
+      --syn-text: #9E4747;
+      --syn-bg: #FBEAEA;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 12px 24px rgba(0, 0, 0, 0.02);
+      backdrop-filter: blur(8px);
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 300px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      border: 2px dashed #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Verdict Pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill.synthetic { background: var(--syn-bg); color: var(--syn-text); }
+    .pill.authentic { background: var(--auth-bg); color: var(--auth-text); }
+    .pill.inconclusive { background: var(--inc-bg); color: var(--inc-text); }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric {
+      background: #FAFAFA;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .explanation-section h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .explanation-list {
+      list-style: none;
+    }
+
+    .explanation-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    .explanation-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--syn-text);
+      font-size: 1.5rem;
+      line-height: 1;
+      top: -4px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      .container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>SignalScope</h1>
+    <p>Telling Real From Synthetic in the Age of Generative Media</p>
+  </div>
+
+  <div class="container">
+    <!-- Left Column: Input -->
+    <div class="card">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Subject Analysis</h2>
+      <div class="image-preview">
+        <span>[ Image Upload Preview ]</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Optional metadata: "Handmade ceramic mug, brand new"</p>
+    </div>
+
+    <!-- Right Column: Results (Showing Synthetic State) -->
+    <div class="card" id="results-card">
+      <div class="pill synthetic" id="verdict-pill">Likely AI-Generated</div>
+      
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-label">Confidence Score</div>
+          <div class="metric-value">0.88</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Attribution</div>
+          <div class="metric-value" style="font-size: 1.1rem; padding-top: 0.3rem;">Diffusion-Family</div>
+        </div>
+      </div>
+
+      <div class="explanation-section">
+        <h3>Visual Cues & Explanation</h3>
+        <ul class="explanation-list">
+          <li>Handle geometry is physically inconsistent with standard physical manufacturing.</li>
+          <li>Reflections on the surface don't match the primary light source direction.</li>
+          <li>Background texture contains implausible repeating artifacts typical of latent diffusion.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="setTheme('authentic')">Simulate: Authentic</button>
+    <button onclick="setTheme('inconclusive')">Simulate: Inconclusive</button>
+    <button onclick="setTheme('synthetic')">Simulate: Synthetic</button>
+  </div>
+
+  <script>
+    function setTheme(state) {
+      const pill = document.getElementById('verdict-pill');
+      const bullets = document.querySelectorAll('.explanation-list li');
+      
+      pill.className = 'pill ' + state;
+      
+      if (state === 'authentic') {
+        pill.innerText = 'Likely Authentic';
+        document.documentElement.style.setProperty('--syn-text', 'var(--auth-text)');
+      } else if (state === 'inconclusive') {
+        pill.innerText = 'Inconclusive';
+        document.documentElement.style.setProperty('--syn-text', 'var(--inc-text)');
+      } else {
+        pill.innerText = 'Likely AI-Generated';
+        document.documentElement.style.setProperty('--syn-text', '#9E4747');
+      }
+    }
+  </script>
+</body>
+</html>
