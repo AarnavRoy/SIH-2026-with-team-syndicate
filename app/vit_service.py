@@ -234,9 +234,14 @@ def analyze_image(image_path: str, simulate_jpeg: bool = False, model_type: str 
     elif fake_prob <= 0.35:
         verdict_status = "authentic"
         verdict_title = "Likely Authentic Capture"
+        lens_decay_desc = (
+            f"Lens power decay ({decay} ratio) verifies physical glass light transmission."
+            if fft_data["is_natural_optics"]
+            else f"Frequency domain ({decay} ratio) captured high-contrast periodic surface textures (e.g. geometric fabric / striped pattern)."
+        )
         summary_note = (
             f"Visual features and optical noise align with authentic physical photography ({raw_real_pct}% Real). "
-            f"Lens power decay ({decay} ratio) verifies physical glass light transmission."
+            f"{lens_decay_desc}"
         )
         cues = [
             f"Neural confidence: {raw_real_pct}% Authentic ({raw_ai_pct}% AI).",

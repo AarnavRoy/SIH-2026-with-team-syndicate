@@ -92,15 +92,20 @@ def extract_exif_metadata(image_path: str) -> Dict[str, Any]:
 
             if "ExposureTime" in parsed_tags and parsed_tags["ExposureTime"]:
                 exp = parsed_tags["ExposureTime"]
-                if isinstance(exp, tuple) and len(exp) == 2:
-                    exp_str = f"{exp[0]}/{exp[1]}s" if exp[1] != 1 else f"{exp[0]}s"
-                elif hasattr(exp, 'numerator') and hasattr(exp, 'denominator'):
-                    exp_str = f"{exp.numerator}/{exp.denominator}s" if exp.denominator != 1 else f"{exp.numerator}s"
+                val = None
+                if isinstance(exp, tuple) and len(exp) == 2 and exp[1] != 0:
+                    val = exp[0] / exp[1]
+                elif hasattr(exp, 'numerator') and hasattr(exp, 'denominator') and exp.denominator != 0:
+                    val = exp.numerator / exp.denominator
                 elif isinstance(exp, (float, int)):
-                    if 0 < exp < 1:
-                        exp_str = f"1/{round(1 / exp)}s"
+                    val = float(exp)
+
+                if val is not None and val > 0:
+                    if val < 1.0:
+                        denom = round(1.0 / val)
+                        exp_str = f"1/{denom}s"
                     else:
-                        exp_str = f"{exp}s"
+                        exp_str = f"{val:.1f}s" if val % 1 != 0 else f"{int(val)}s"
                 else:
                     exp_str = f"{exp}s"
                 metadata["exposure_time"] = exp_str
