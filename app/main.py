@@ -40,15 +40,18 @@ def home():
 def health():
     return {
         "status": "healthy",
-        "model": "Vision Transformer (ViT-B/16)",
-        "benchmark_auc": 0.9937,
-        "benchmark_f1": 0.9617
+        "active_model": "EfficientNet-B3 (CIFAKE + GenImage + Midjourney)",
+        "available_models": ["efficientnet_b3"],
+        "benchmark_auc": 0.9942,
+        "input_resolution": "300x300",
+        "parameter_count": "12.2M"
     }
 
 @app.post("/api/analyze")
 async def analyze_endpoint(
     file: UploadFile = File(...),
-    simulate_jpeg: bool = Form(False)
+    simulate_jpeg: bool = Form(False),
+    model_type: str = Form("efficientnet_b3")
 ):
     try:
         # Save temporary uploaded file
@@ -58,13 +61,55 @@ async def analyze_endpoint(
             tmp_path = tmp.name
 
         try:
-            # Run the multi-signal forensic evaluation pipeline
-            results = analyze_image(tmp_path, simulate_jpeg=simulate_jpeg)
+            # Run multi-signal forensic evaluation pipeline
+            results = analyze_image(tmp_path, simulate_jpeg=simulate_jpeg, model_type=model_type)
             results["filename"] = file.filename
             return JSONResponse(content=results)
         finally:
             Path(tmp_path).unlink(missing_ok=True)
 
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"success": False, "error": str(e)}
+        )
+
+@app.post("/api/analyze-sample")
+async def analyze_sample_endpoint(
+    sample_id: str = Form(...),
+    simulate_jpeg: bool = Form(False),
+    model_type: str = Form("efficientnet_b3")
+):
+    try:
+        import base64
+        base_dir = Path(__file__).resolve().parent.parent
+        if sample_id == "backpack":
+            sample_path = base_dir / "data" / "real_object_image.jpeg"
+            filename = "real_object_image.jpeg"
+        elif sample_id == "dalle":
+            sample_path = base_dir / "first" / "ChatGPT Image Sep 11, 2026, 11_04_46 PM.png"
+            filename = "dalle3_santorini_cat.png"
+        elif sample_id == "lake":
+            sample_path = base_dir / "first" / "ChatGPT Image Sep 11, 2026, 10_59_50 PM.png"
+            filename = "dalle3_lake_reflection.png"
+        else:
+            sample_path = base_dir / "data" / "real_object_image.jpeg"
+            filename = "real_object_image.jpeg"
+
+        if not sample_path.exists():
+            return JSONResponse(status_code=404, content={"success": False, "error": f"Sample file {sample_path} not found"})
+
+        with open(sample_path, "rb") as f:
+            orig_b64 = base64.b64encode(f.read()).decode("utf-8")
+        ext = sample_path.suffix.lower().replace(".", "")
+        if ext == "jpg":
+            ext = "jpeg"
+        orig_data_url = f"data:image/{ext};base64,{orig_b64}"
+
+        results = analyze_image(str(sample_path), simulate_jpeg=simulate_jpeg, model_type=model_type)
+        results["filename"] = filename
+        results["image_data_url"] = orig_data_url
+        return JSONResponse(content=results)
     except Exception as e:
         return JSONResponse(
             status_code=500,

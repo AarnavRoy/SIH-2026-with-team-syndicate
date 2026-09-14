@@ -3,6 +3,9 @@
 *.pt
 *.bin
 *.onnx
+*.zip
+efficientnet_b3_best/
+tinygenimage_*/
 
 # Python cache & envs
 __pycache__/
