@@ -43,32 +43,58 @@ transform_224 = transforms.Compose([
 
 def analyze_frequency_domain(img: Image.Image) -> Dict[str, Any]:
     """
-    Computes 2D Fast Fourier Transform (FFT) to inspect optical power decay.
+    Computes the real 2D power spectrum with numpy.fft.fft2 on the grayscale array,
+    derives the actual radial decay ratio, and sets the 'natural optics' flag from
+    a real threshold on that number.
     """
-    gray = np.array(img.convert("L").resize((256, 256)), dtype=np.float32)
+    gray = np.array(img.convert("L"), dtype=np.float32)
+    h, w = gray.shape
+    
+    # Real 2D power spectrum with numpy.fft.fft2
     f = np.fft.fft2(gray)
     fshift = np.fft.fftshift(f)
-    magnitude = np.abs(fshift) + 1e-8
-    log_magnitude = 20 * np.log(magnitude)
+    power_spectrum = np.abs(fshift) ** 2
     
-    cy, cx = 128, 128
-    y, x = np.ogrid[:256, :256]
-    r = np.sqrt((x - cx)**2 + (y - cy)**2).astype(int)
+    cy, cx = h // 2, w // 2
+    y, x = np.ogrid[:h, :w]
+    r = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
+    max_r = min(cy, cx)
     
-    low_freq = np.mean(log_magnitude[r < 32])
-    mid_freq = np.mean(log_magnitude[(r >= 32) & (r < 96)])
-    high_freq = np.mean(log_magnitude[r >= 96])
+    # Radial bands: low-frequency core (<15% radius) vs high-frequency perimeter (>=50% radius)
+    low_mask = (r < max_r * 0.15) & (r > 0)
+    high_mask = (r >= max_r * 0.50) & (r <= max_r)
     
-    freq_decay_ratio = float((low_freq - high_freq) / (low_freq + 1e-6))
-    optics_fidelity = float(np.clip((freq_decay_ratio - 0.20) / (0.32 - 0.20), 0.0, 1.0))
-    is_natural_optics = freq_decay_ratio >= 0.24
+    low_power = float(np.mean(power_spectrum[low_mask])) if np.any(low_mask) else 1e-6
+    high_power = float(np.mean(power_spectrum[high_mask])) if np.any(high_mask) else 1e-6
+    
+    log_low = float(np.log10(low_power + 1e-12))
+    log_high = float(np.log10(high_power + 1e-12))
+    
+    # Actual radial decay ratio
+    decay_ratio = float((log_low - log_high) / (log_low + 1e-12))
+    
+    # Real threshold on natural camera optics
+    NATURAL_OPTICS_THRESHOLD = 0.30
+    is_natural_optics = bool(decay_ratio >= NATURAL_OPTICS_THRESHOLD)
+    optics_fidelity = float(np.clip((decay_ratio - 0.20) / (0.35 - 0.20), 0.0, 1.0))
+    
+    # Periodic lattice grid detection (excluding center crosshairs)
+    cross_mask = (np.abs(x - cx) <= 2) | (np.abs(y - cy) <= 2)
+    clean_high = high_mask & (~cross_mask)
+    if np.any(clean_high):
+        peak_val = float(np.max(power_spectrum[clean_high]))
+        mean_val = float(np.mean(power_spectrum[clean_high]))
+        grid_detected = bool((peak_val / (mean_val + 1e-12)) > 120.0)
+    else:
+        grid_detected = False
     
     return {
         "is_natural_optics": is_natural_optics,
         "optics_fidelity": round(optics_fidelity, 3),
-        "freq_decay_ratio": round(freq_decay_ratio, 3),
-        "low_freq_energy": round(float(low_freq), 1),
-        "high_freq_energy": round(float(high_freq), 1)
+        "freq_decay_ratio": round(decay_ratio, 3),
+        "low_freq_energy": round(log_low, 1),
+        "high_freq_energy": round(log_high, 1),
+        "grid_artifact_detected": grid_detected
     }
 
 def get_b3_model():
