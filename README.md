@@ -75,5 +75,5 @@ Actual Synthetic         214           9,786      (Recall: 97.9%)
 2. **Transit-Stripped Meta-Data:** Messaging apps strip EXIF data. In these cases, the system falls back to 2D Fourier FFT radial decay analysis as a proxy.
 
 ## 6. Links
-- **Demo Video:** 
+- **Demo Video: https://youtu.be/lyFVtNK_ssI?si=brjeRudcKkJBTRbP ** 
 
