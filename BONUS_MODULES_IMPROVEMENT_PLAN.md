@@ -53,7 +53,7 @@ Predict the **generator family** (GAN vs Diffusion vs specific model) with a sep
 ### Implementation Options
 
 **Option 1 — Multi-class head (best):**
-- Change classifier head from 2-class to multi-class (Real / SD / Midjourney / DALL-E / GAN)
+- Change classifier head from 2-class to multi-class (Real / SD / DALL-E / GAN)
 - Use GenImage dataset — already organized by generator, labels are free
 - Report multi-class macro-F1
 
@@ -274,3 +274,5 @@ model = AutoModelForCausalLM.from_pretrained("google/gemma-3-4b-it")
 - **Pros:** Offline, free, no rate limits, fully reproducible without API key
 - **Cons:** ~8GB RAM, slower, less capable than hosted Gemini
 - **Verdict:** Good fallback; CLIP is simpler for Module E
+
+

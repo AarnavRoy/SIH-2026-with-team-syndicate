@@ -8,7 +8,7 @@ Scientific basis:
 - GANs (StyleGAN, BigGAN) use transposed convolution for upsampling,
   which leaves periodic checkerboard artifacts visible as spectral peaks
   in the high-frequency domain.
-- Diffusion models (SD, Midjourney, DALL-E) use VAE decoders that produce
+- Diffusion models (SD, DALL-E) use VAE decoders that produce
   smoother, more uniform frequency rolloff with subtle lattice patterns.
 - Real camera images follow a natural 1/f power spectral density decay
   due to optical lens physics and Bayer CFA interpolation.
@@ -160,7 +160,7 @@ def attribute_generator(ai_probability: float, raw_bytes: bytes, pil_image: Imag
     
     Classifies the likely generator family:
       - "Optical Camera" (real photo)
-      - "Diffusion Model (e.g., SD/Midjourney/DALL-E)"  
+      - "Diffusion Model (e.g., SD/DALL-E)"  
       - "GAN (e.g., StyleGAN/BigGAN)"
     
     Args:
@@ -201,7 +201,7 @@ def attribute_generator(ai_probability: float, raw_bytes: bytes, pil_image: Imag
     # Step 1: Check raw bytes for explicit generator metadata signatures
     # ------------------------------------------------------------------
     header = raw_bytes[:2048].lower()
-    known_diffusion_sigs = [b'midjourney', b'stable diffusion', b'dall-e', b'dalle',
+    known_diffusion_sigs = [b'stable diffusion', b'dalle',
                             b'stablediffusion', b'invoke-ai', b'automatic1111',
                             b'comfyui', b'dreamstudio']
     known_gan_sigs = [b'stylegan', b'biggan', b'progan', b'thispersondoesnotexist']
@@ -234,7 +234,7 @@ def attribute_generator(ai_probability: float, raw_bytes: bytes, pil_image: Imag
     if pil_image is None:
         if ai_probability > 75.0:
             return {
-                "family": "Diffusion Model (e.g., SD/Midjourney)",
+                "family": "Diffusion Model (e.g., SD)",
                 "confidence": round(ai_probability - 5.0, 1),
                 "signature_cues": ["No image data for FFT - classified by probability"],
                 "spectral_slope": None,
@@ -335,7 +335,7 @@ def attribute_generator(ai_probability: float, raw_bytes: bytes, pil_image: Imag
     # ------------------------------------------------------------------
     scores = {
         "Optical Camera": optical_score,
-        "Diffusion Model (e.g., SD/Midjourney)": diffusion_score,
+        "Diffusion Model (e.g., SD)": diffusion_score,
         "GAN (e.g., StyleGAN/BigGAN)": gan_score
     }
     
@@ -360,3 +360,5 @@ def attribute_generator(ai_probability: float, raw_bytes: bytes, pil_image: Imag
         "high_freq_energy_ratio": round(hf_energy_ratio, 4),
         "spectral_peaks": spectral_peaks
     }
+
+

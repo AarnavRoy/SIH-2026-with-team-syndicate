@@ -665,7 +665,7 @@ Note on citation — the hackathon README requires you to cite datasets. For CIF
 paperswithcode
 
 Optional extra training data: GenImage
-Your brief specifically allows adding this — search "GenImage dataset" on Kaggle or GitHub (it's a large multi-generator dataset covering things like Midjourney, GLIDE, and diffusion models beyond just Stable Diffusion — useful if you want your model to generalize better to the "unseen generator" test split).
+Your brief specifically allows adding this — search "GenImage dataset" on Kaggle or GitHub (it's a large multi-generator dataset covering things like DALL-E, GLIDE, and diffusion models beyond just Stable Diffusion — useful if you want your model to generalize better to the "unseen generator" test split).
 
 Practical tip given your setup
 Since you're on free Colab, don't try to load the full 120k images at once if you're tight on time/storage — CIFAKE images are small (32x32, from CIFAR-10), so it's actually very Colab-friendly and will download/train fast even on free tier. Good news for you as a beginner — this is one of the lighter datasets to work with.

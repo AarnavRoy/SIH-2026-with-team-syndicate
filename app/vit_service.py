@@ -101,12 +101,12 @@ def analyze_frequency_domain(img: Image.Image) -> Dict[str, Any]:
 
 def get_b3_model():
     """
-    SOTA Primary: EfficientNet-B3 (CIFAKE + GenImage + Midjourney).
+    SOTA Primary: EfficientNet-B3 (CIFAKE + GenImage).
     Input: 300x300, 12.2M params.
     """
     global _b3_model
     if _b3_model is None:
-        print(f"Loading EfficientNet-B3 (CIFAKE + GenImage + Midjourney) on {_device}...")
+        print(f"Loading EfficientNet-B3 (CIFAKE + GenImage) on {_device}...")
         m = models.efficientnet_b3(weights=None)
         m.classifier[1] = nn.Linear(1536, 2)
         
@@ -216,7 +216,7 @@ def analyze_image(
     else: # efficientnet_b3 (default SOTA)
         model = get_b3_model()
         tensor_input = transform_300(img).unsqueeze(0).to(_device)
-        model_display_name = "EfficientNet-B3 (CIFAKE + GenImage + Midjourney)"
+        model_display_name = "EfficientNet-B3 (CIFAKE + GenImage)"
         model_tag = "EfficientNet-B3 SOTA"
         model_arch = "EfficientNet-B3 • 12.2M Params • 300px SOTA"
         threshold = 70
@@ -416,3 +416,4 @@ def analyze_image(
         "generator_attribution": generator_attribution,
         "multimodal_verification": multimodal_verification,
     }
+

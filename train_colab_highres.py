@@ -1,7 +1,7 @@
 """
 =============================================================================
 SignalScope - High-Resolution ViT-B/16 Fine-Tuning Pipeline
-Target: Modern Real-World Photography vs. Diffusion Synthetics (Midjourney / SD)
+Target: Modern Real-World Photography vs. Diffusion Synthetics (DALL-E / SD)
 Hardware: Google Colab (Free Tesla T4 GPU, ~8 minutes)
 Benchmark Citing: Section 4.1 & 4.2 (GenImage / HuggingFace Public Data)
 =============================================================================
@@ -164,3 +164,4 @@ try:
     print("Download triggered automatically in Colab!")
 except ImportError:
     print(f"File saved locally as '{output_filename}'.")
+

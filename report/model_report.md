@@ -18,9 +18,9 @@
 ## 2. Dataset & Splits
 * **Core Training Data:**
   * Base: Provided CIFAKE-style dataset (~100k balanced real vs. synthetic images).
-  * Augmented Public Data: GenImage benchmark subsets (diffusion model generators: Stable Diffusion v1.4, v1.5, Midjourney v5).
+  * Augmented Public Data: GenImage benchmark subsets (diffusion model generators: Stable Diffusion v1.4, v1.5).
 * **Split Ratio:** 80% Training ($N \approx 80,000$), 20% Validation ($N \approx 20,000$).
-* **Unseen Test Evaluation:** Evaluated on unseen modern generative diffusion outputs (DALL-E 3, Midjourney v6) absent from the training split to verify out-of-distribution generalisation.
+* **Unseen Test Evaluation:** Evaluated on unseen modern generative diffusion outputs (DALL-E 3) absent from the training split to verify out-of-distribution generalisation.
 
 ---
 
@@ -62,3 +62,4 @@ Actual Synthetic         214           9,786      (Recall: 97.9%)
 ## 6. Honest Limitations & Known Failure Cases
 1. **Smartphone Computational Post-Processing (MediaTek/Snapdragon ISP):** Budget and midrange smartphones taking indoor dim-lighting photos at high sensitivity (e.g. $\text{ISO} \ge 800$) apply heavy bilateral noise reduction and unsharp edge-sharpening. The convolutional model can misinterpret this plastic smoothing as generative diffusion noise. *Mitigation:* Multi-Signal Calibration checks hardware EXIF and Fourier optical decay to prevent false positives and downgrade the verdict to "Inconclusive".
 2. **Transit-Stripped Messaging Platforms:** WhatsApp, Telegram, Discord, and web chats strip all EXIF metadata for user privacy. *Mitigation:* 2D Fourier FFT radial decay acts as an independent physical proxy for optical glass transmission when EXIF is absent.
+

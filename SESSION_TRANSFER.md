@@ -12,7 +12,7 @@ SignalScope is a panoramic media forensics and verification engine designed to d
 
 ### Implemented Pipeline:
 1. **Core AI Model (Section 3.1):**
-   - **Architecture:** `EfficientNet-B3` (Aarnav's model, fine-tuned on CIFAKE + GenImage + Midjourney).
+   - **Architecture:** `EfficientNet-B3` (Aarnav's model, fine-tuned on CIFAKE + GenImage).
    - **Resolution:** 300×300 receptive field.
    - **Inference Purity:** 100% unadulterated raw PyTorch softmax outputs (`fake_prob`, `real_prob`). Zero hardcoded heuristics, zero probability overrides, and zero filename sniffing.
    - **Decision Thresholds:**
@@ -67,3 +67,4 @@ SignalScope is a panoramic media forensics and verification engine designed to d
 4. **Final Deliverables:**
    - Update `README.md` with benchmark citations and setup instructions.
    - Record 3–5 minute demo video.
+

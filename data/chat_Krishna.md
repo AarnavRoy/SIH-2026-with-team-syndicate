@@ -1198,7 +1198,7 @@ Suppose you train using:
 
 Training:
 Stable Diffusion
-Midjourney-like images
+DALL-E-like images
 GAN images
 
 Then your model sees an unfamiliar generator during evaluation.

@@ -40,7 +40,7 @@ def home():
 def health():
     return {
         "status": "healthy",
-        "active_model": "EfficientNet-B3 (CIFAKE + GenImage + Midjourney)",
+        "active_model": "EfficientNet-B3 (CIFAKE + GenImage)",
         "available_models": ["efficientnet_b3"],
         "benchmark_auc": 0.9942,
         "input_resolution": "300x300",
@@ -121,3 +121,4 @@ async def analyze_sample_endpoint(
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+
