@@ -20,7 +20,6 @@
   * Base: Provided CIFAKE-style dataset (~100k balanced real vs. synthetic images).
   * Augmented Public Data: GenImage benchmark subsets (diffusion model generators: Stable Diffusion v1.4, v1.5).
 * **Split Ratio:** 80% Training ($N \approx 80,000$), 20% Validation ($N \approx 20,000$).
-* **Unseen Test Evaluation:** Evaluated on unseen modern generative diffusion outputs (DALL-E 3) absent from the training split to verify out-of-distribution generalisation.
 
 ---
 
